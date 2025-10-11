@@ -1,5 +1,10 @@
 package net.nhatjs.js_furniture_mod;
 
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.entity.ModEntities;
+import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
+import net.nhatjs.js_furniture_mod.item.ModItems;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -52,6 +57,14 @@ public class NhatJSFurnitureMod {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModEntities.register(modEventBus);
+        ModCreativeModeTabs.register(modEventBus);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            NhatJSFurnitureModClient.init(modEventBus);
+        }
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -78,7 +91,6 @@ public class NhatJSFurnitureMod {
     static class ClientModEvents {
         @SubscribeEvent
         static void onClientSetup(FMLClientSetupEvent event) {
-
         }
     }
 }

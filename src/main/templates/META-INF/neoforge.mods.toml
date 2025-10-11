@@ -29,6 +29,7 @@ version="${mod_version}" #mandatory
 # A display name for the mod
 displayName="${mod_name}" #mandatory
 
+
 # A URL to query for updates for this mod. See the JSON update specification https://docs.neoforged.net/docs/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 
@@ -37,6 +38,8 @@ displayName="${mod_name}" #mandatory
 
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
+
+logoFile="${mod_id}_icon.png"
 
 # A text field displayed in the mod UI
 #credits="" #optional
@@ -85,6 +88,12 @@ description='''${mod_description}'''
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="fusion"
+    type="required"
+    versionRange="[1.0.0,)"
+    ordering="NONE"
+    side="CLIENT"
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
