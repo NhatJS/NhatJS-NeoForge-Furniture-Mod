@@ -76,7 +76,7 @@ public class TVBlock extends Block {
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Direction face = ctx.getClickedFace();
         if (face.getAxis().isHorizontal()) {
-            BlockPos back = ctx.getClickedPos().offset(face.getOpposite().getNormal());
+            BlockPos back = ctx.getClickedPos().offset(face.getOpposite().getUnitVec3i());
             if (hasSupport(ctx.getLevel(), back, face)) {
                 return defaultBlockState()
                         .setValue(FACING, face)

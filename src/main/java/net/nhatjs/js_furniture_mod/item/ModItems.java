@@ -9,7 +9,7 @@ import net.nhatjs.js_furniture_mod.NhatJSFurnitureMod;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NhatJSFurnitureMod.MOD_ID);
 
-    public static final DeferredItem<Item> REMOTE_CONTROL_RGB = ITEMS.register("remote_control_rgb", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> REMOTE_CONTROL_RGB = ITEMS.registerItem("remote_control_rgb", Item::new, new Item.Properties());
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -5,7 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -56,7 +56,7 @@ public class ChairBlock extends Block {
             Entity entity = null;
             List<ChairBlockEntity> entities = level.getEntities(ModEntities.CHAIR.get(), new AABB(pos), chairBlockEntity -> true);
             if(entities.isEmpty()) {
-                entity = ModEntities.CHAIR.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+                entity = ModEntities.CHAIR.get().spawn((ServerLevel) level, pos, EntitySpawnReason.TRIGGERED);
             } else {
                 entity = entities.get(0);
             }

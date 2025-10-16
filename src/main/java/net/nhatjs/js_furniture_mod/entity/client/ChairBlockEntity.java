@@ -1,9 +1,10 @@
 package net.nhatjs.js_furniture_mod.entity.client;
 
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -19,19 +20,28 @@ public class ChairBlockEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float v) {
+        return false;
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag compoundTag) {
 
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
+    protected void addAdditionalSaveData(CompoundTag compoundTag) {
 
     }
+
+
 
     @Override
     protected void removePassenger(Entity passenger) {
         super.removePassenger(passenger);
-        this.kill();
+        if(!level().isClientSide()) {
+            this.kill(((ServerLevel) this.level()));
+        }
     }
 
     @Override
