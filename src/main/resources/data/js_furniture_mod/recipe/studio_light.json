@@ -11,7 +11,7 @@
     "2": "minecraft:redstone_lamp"
   },
   "result": {
-    "id": "js_furniture_mod:studio_light",
-    "count": 2
+    "count": 2,
+    "id": "js_furniture_mod:studio_light"
   }
 }
