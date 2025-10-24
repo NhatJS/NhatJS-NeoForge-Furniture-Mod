@@ -1,8 +1,12 @@
 package net.nhatjs.js_furniture_mod;
 
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
+import net.nhatjs.js_furniture_mod.entity.client.renderer.ChairRenderer;
 import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
 import net.nhatjs.js_furniture_mod.item.ModItems;
 import org.slf4j.Logger;
@@ -61,7 +65,7 @@ public class NhatJSFurnitureMod {
         ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             NhatJSFurnitureModClient.init(modEventBus);
         }
 
