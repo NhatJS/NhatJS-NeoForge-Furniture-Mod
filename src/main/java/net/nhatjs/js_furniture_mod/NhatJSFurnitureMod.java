@@ -1,7 +1,13 @@
 package net.nhatjs.js_furniture_mod;
 
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
+import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CeilingFanRenderer;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
 import net.nhatjs.js_furniture_mod.item.ModItems;
@@ -60,6 +66,7 @@ public class NhatJSFurnitureMod {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             NhatJSFurnitureModClient.init(modEventBus);
@@ -67,6 +74,9 @@ public class NhatJSFurnitureMod {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener((ModelEvent.RegisterAdditional e) -> {
+            e.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades")));
+        });
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

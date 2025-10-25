@@ -7,9 +7,15 @@
     "232"
   ],
   "key": {
-    "1": "minecraft:book",
-    "2": "minecraft:white_dye",
-    "3": "minecraft:black_dye"
+    "1": {
+      "item": "minecraft:book"
+    },
+    "2": {
+      "item": "minecraft:white_dye"
+    },
+    "3": {
+      "item": "minecraft:black_dye"
+    }
   },
   "result": {
     "id": "js_furniture_mod:books",

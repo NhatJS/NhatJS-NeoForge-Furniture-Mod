@@ -53,6 +53,7 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.WOOD_STRIPED_WALL.get());
                                         output.accept(ModBlocks.BLACK_MIRROR.get());
                                         output.accept(ModBlocks.VERTICAL_BLINDS.get());
+                                        output.accept(ModBlocks.CEILING_FAN.get()); //1.0.2 update
                                         output.accept(ModBlocks.SOCKET.get());
                                         output.accept(ModBlocks.TV.get());
                                         output.accept(ModBlocks.FLOOR_STANDING_SPEAKER.get());
@@ -62,6 +63,8 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.LED_FLOOR_LAMP_RGB_OFF.get());
                                         output.accept(ModBlocks.LED_RGB_TRIANGLE_PANEL.get());
                                         output.accept(ModBlocks.STUDIO_LIGHT.get());
+                                        output.accept(ModBlocks.BLACK_GAMING_CHAIR.get()); //1.0.2 update
+                                        output.accept(ModBlocks.WHITE_GAMING_CHAIR.get()); //1.0.2 update
                                         output.accept(ModBlocks.MONITOR_SETUP.get());
                                         output.accept(ModBlocks.MONITOR.get());
                                         output.accept(ModBlocks.KEYBOARD.get());
