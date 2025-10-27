@@ -118,4 +118,20 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
             super.onRemove(state, level, pos, newState, moved);
         } else super.onRemove(state, level, pos, newState, moved);
     }
+
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide()) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof CoffeeTableBlockEntity table) {
+                ItemStack s = table.getItem();
+                if (!s.isEmpty()) {
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), s);
+                    table.setItem(ItemStack.EMPTY);
+                }
+            }
+        }
+        super.playerWillDestroy(level, pos, state, player);
+        return state;
+    }
 }
