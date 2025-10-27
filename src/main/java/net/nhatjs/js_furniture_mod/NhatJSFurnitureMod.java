@@ -4,7 +4,10 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.entity.client.renderer.ChairRenderer;
 import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
@@ -63,6 +66,7 @@ public class NhatJSFurnitureMod {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModEntities.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         if (FMLEnvironment.getDist() == Dist.CLIENT) {
@@ -71,6 +75,12 @@ public class NhatJSFurnitureMod {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener((ModelEvent.RegisterStandalone event) -> {
+            event.register(
+                    NhatJSFurnitureModClient.CEILING_FAN_BLADES_ID,
+                    SimpleUnbakedStandaloneModel.blockStateModel(NhatJSFurnitureModClient.CEILING_FAN_BLADES)
+            );
+        });
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
