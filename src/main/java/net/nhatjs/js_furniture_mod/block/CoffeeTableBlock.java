@@ -2,22 +2,37 @@ package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class CoffeeTableBlock extends Block {
+public class CoffeeTableBlock extends Block implements EntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 
     public CoffeeTableBlock(Properties settings) {
         super(settings);
+        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(HAS_ITEM, false));
     }
 
     private static final VoxelShape HORIZONTAL = Shapes.or(
@@ -55,8 +70,54 @@ public class CoffeeTableBlock extends Block {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
+
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, HAS_ITEM);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new CoffeeTableBlockEntity(pos, state);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+                                            Player player, BlockHitResult hit) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+
+        CoffeeTableBlockEntity be = (CoffeeTableBlockEntity) level.getBlockEntity(pos);
+        ItemStack held = player.getMainHandItem();
+
+        assert be != null;
+        if (be.getItem().isEmpty() && !held.isEmpty()) {
+            ItemStack put = held.copy(); put.setCount(1);
+            be.setItem(put);
+            held.shrink(1);
+        } else if (!be.getItem().isEmpty()) {
+            Containers.dropItemStack(level, pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, be.getItem());
+            be.setItem(ItemStack.EMPTY);
+        }
+        return InteractionResult.CONSUME; // đã xử lý
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos,
+                         BlockState newState, boolean moved) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof CoffeeTableBlockEntity ct) {
+                ItemStack s = ct.getItem();
+                NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
+                items.set(0, s);
+            }
+            super.onRemove(state, level, pos, newState, moved);
+        } else super.onRemove(state, level, pos, newState, moved);
     }
 }
