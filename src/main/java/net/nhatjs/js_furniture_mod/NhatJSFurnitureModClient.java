@@ -2,10 +2,17 @@ package net.nhatjs.js_furniture_mod;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
+import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CeilingFanRenderer;
+import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CoffeeTableRenderer;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.entity.client.renderer.ChairRenderer;
 
@@ -13,6 +20,11 @@ public class NhatJSFurnitureModClient {
     public static void init(IEventBus eventBus) {
         eventBus.addListener(NhatJSFurnitureModClient::onClientSetup);
     }
+
+    public static final ResourceLocation CEILING_FAN_BLADES = ResourceLocation.fromNamespaceAndPath(
+            NhatJSFurnitureMod.MOD_ID, "block/ceiling_fan_blades");
+
+    public static final StandaloneModelKey<BlockStateModel> CEILING_FAN_BLADES_ID = new StandaloneModelKey<BlockStateModel>(CEILING_FAN_BLADES);
 
     private static void onClientSetup(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
@@ -87,6 +99,14 @@ public class NhatJSFurnitureModClient {
 
             EntityRenderers.register(ModEntities.CHAIR.get(), ChairRenderer::new);
             EntityRenderers.register(ModEntities.SOFA.get(), ChairRenderer::new);
+
+            //1.0.2 update
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.CEILING_FAN.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.BLACK_GAMING_CHAIR.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WHITE_GAMING_CHAIR.get(), RenderType.cutoutMipped());
+            BlockEntityRenderers.register(ModBlockEntities.CEILING_FAN.get(), CeilingFanRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.COFFEE_TABLE.get(), CoffeeTableRenderer::new);
+            //end
         });
     }
 }
