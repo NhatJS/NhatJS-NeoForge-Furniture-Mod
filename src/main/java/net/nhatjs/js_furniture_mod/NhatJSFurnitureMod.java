@@ -1,10 +1,22 @@
 package net.nhatjs.js_furniture_mod;
 
+import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.resources.model.ResolvableModel;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.model.UnbakedModelLoader;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelLoader;
+import net.neoforged.neoforge.client.model.standalone.UnbakedStandaloneModel;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
 import net.nhatjs.js_furniture_mod.item.ModItems;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -39,6 +51,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.concurrent.Executor;
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(NhatJSFurnitureMod.MOD_ID)
 public class NhatJSFurnitureMod {
@@ -59,6 +73,7 @@ public class NhatJSFurnitureMod {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModEntities.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -67,6 +82,12 @@ public class NhatJSFurnitureMod {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener((ModelEvent.RegisterStandalone event) -> {
+            event.register(
+                    NhatJSFurnitureModClient.CEILING_FAN_BLADES_ID,
+                    SimpleUnbakedStandaloneModel.blockStateModel(NhatJSFurnitureModClient.CEILING_FAN_BLADES)
+            );
+        });
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
