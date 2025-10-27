@@ -154,6 +154,15 @@ public class ModBlocks {
     public static final DeferredBlock<Block> BOOKS = registerBlock("books",
             (properties) -> new BooksBlock(properties.mapColor(MapColor.STONE).strength(0.1f).noOcclusion()));
 
+    //1.0.2 update
+    public static final DeferredBlock<Block> CEILING_FAN = registerBlock("ceiling_fan",
+            (properties) -> new CeilingFanBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> BLACK_GAMING_CHAIR = registerBlock("black_gaming_chair",
+            (properties) -> new ChairBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WHITE_GAMING_CHAIR = registerBlock("white_gaming_chair",
+            (properties) -> new ChairBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    //end
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> function) {
         DeferredBlock<T> toReturn = BLOCKS.registerBlock(name, function);
         registerBlockItem(name, toReturn);
