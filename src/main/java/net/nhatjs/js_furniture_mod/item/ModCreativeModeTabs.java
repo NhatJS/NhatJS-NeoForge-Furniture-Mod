@@ -83,6 +83,7 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.MODERN_BATHROOM_SINK_STORAGE.get());
                                         output.accept(ModBlocks.MODERN_BATHROOM_MIRROR_SHELF.get());
                                         output.accept(ModBlocks.SHOWER.get());
+                                        output.accept(ModBlocks.TOILET.get()); //1.0.3 update
                                         output.accept(ModBlocks.WASHING_MACHINE_AI.get());
                                         output.accept(ModBlocks.PLANT_POT.get());
                                         output.accept(ModBlocks.BOOKS.get());
