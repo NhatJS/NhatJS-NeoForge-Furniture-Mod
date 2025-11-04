@@ -1,25 +1,20 @@
 package net.nhatjs.js_furniture_mod;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
-import net.neoforged.neoforge.client.model.standalone.UnbakedStandaloneModel;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CeilingFanRenderer;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CoffeeTableRenderer;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
-import net.nhatjs.js_furniture_mod.entity.client.renderer.ChairRenderer;
+import net.nhatjs.js_furniture_mod.entity.client.renderer.SeatRenderer;
 
 public class NhatJSFurnitureModClient {
     public static void init(IEventBus eventBus) {
@@ -102,8 +97,8 @@ public class NhatJSFurnitureModClient {
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_TOWER_GLASS.get(), ChunkSectionLayer.TRANSLUCENT);
 
-            EntityRenderers.register(ModEntities.CHAIR.get(), ChairRenderer::new);
-            EntityRenderers.register(ModEntities.SOFA.get(), ChairRenderer::new);
+            EntityRenderers.register(ModEntities.CHAIR.get(), SeatRenderer::new);
+            EntityRenderers.register(ModEntities.SOFA.get(), SeatRenderer::new);
 
             //1.0.2 update
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CEILING_FAN.get(), ChunkSectionLayer.CUTOUT_MIPPED);
@@ -111,6 +106,10 @@ public class NhatJSFurnitureModClient {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WHITE_GAMING_CHAIR.get(), ChunkSectionLayer.CUTOUT_MIPPED);
             BlockEntityRenderers.register(ModBlockEntities.CEILING_FAN.get(), CeilingFanRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.COFFEE_TABLE.get(), CoffeeTableRenderer::new);
+            //end
+
+            //1.0.3 update
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.TOILET.get(), ChunkSectionLayer.CUTOUT_MIPPED);
             //end
         });
     }

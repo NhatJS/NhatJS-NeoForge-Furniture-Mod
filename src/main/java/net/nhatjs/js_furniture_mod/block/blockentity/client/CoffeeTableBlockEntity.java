@@ -48,5 +48,5 @@ public class CoffeeTableBlockEntity extends BlockEntity {
     }
 
     @Override public Packet<ClientGamePacketListener> getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
-    @Override public CompoundTag getUpdateTag(HolderLookup.Provider register) { return saveWithoutMetadata(level.registryAccess()); }
+    @Override public CompoundTag getUpdateTag(HolderLookup.Provider register) { return saveWithoutMetadata(register); }
 }

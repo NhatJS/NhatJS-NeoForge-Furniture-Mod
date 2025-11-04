@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class ChairBlockEntity extends Entity {
-    public ChairBlockEntity(EntityType<?> entityType, Level level) {
+public class SeatBlockEntity extends Entity {
+    public SeatBlockEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
 
