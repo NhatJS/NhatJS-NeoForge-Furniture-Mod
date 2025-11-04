@@ -9,7 +9,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.nhatjs.js_furniture_mod.NhatJSFurnitureMod;
-import net.nhatjs.js_furniture_mod.entity.client.ChairBlockEntity;
+import net.nhatjs.js_furniture_mod.entity.client.SeatBlockEntity;
 
 import java.util.function.Supplier;
 
@@ -20,12 +20,12 @@ public class ModEntities {
     public static ResourceKey<EntityType<?>> CHAIR_KEY = ResourceKey.create(Registries.ENTITY_TYPE,
             ResourceLocation.withDefaultNamespace("chair_entity"));
 
-    public static final Supplier<EntityType<ChairBlockEntity>> CHAIR =
-            ENTITY_TYPES.register("chair_entity", () -> EntityType.Builder.of(ChairBlockEntity::new, MobCategory.MISC)
+    public static final Supplier<EntityType<SeatBlockEntity>> CHAIR =
+            ENTITY_TYPES.register("chair_entity", () -> EntityType.Builder.of(SeatBlockEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.675f).build(CHAIR_KEY));
 
-    public static final Supplier<EntityType<ChairBlockEntity>> SOFA =
-            ENTITY_TYPES.register("sofa_entity", () -> EntityType.Builder.of(ChairBlockEntity::new, MobCategory.MISC)
+    public static final Supplier<EntityType<SeatBlockEntity>> SOFA =
+            ENTITY_TYPES.register("sofa_entity", () -> EntityType.Builder.of(SeatBlockEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.475f).build(CHAIR_KEY));
 
     public static void register(IEventBus eventBus) {
