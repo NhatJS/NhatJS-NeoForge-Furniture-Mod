@@ -163,6 +163,11 @@ public class ModBlocks {
             (properties) -> new ChairBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     //end
 
+    //1.0.3 update
+    public static final DeferredBlock<Block> TOILET = registerBlock("toilet",
+            (properties) -> new ToiletBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    //end
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> function) {
         DeferredBlock<T> toReturn = BLOCKS.registerBlock(name, function);
         registerBlockItem(name, toReturn);
