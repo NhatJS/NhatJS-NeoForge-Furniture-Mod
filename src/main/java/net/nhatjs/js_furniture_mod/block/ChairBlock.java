@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
-import net.nhatjs.js_furniture_mod.entity.client.ChairBlockEntity;
+import net.nhatjs.js_furniture_mod.entity.client.SeatBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class ChairBlock extends Block {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide()) {
             Entity entity = null;
-            List<ChairBlockEntity> entities = level.getEntities(ModEntities.CHAIR.get(), new AABB(pos), chairBlockEntity -> true);
+            List<SeatBlockEntity> entities = level.getEntities(ModEntities.CHAIR.get(), new AABB(pos), seatBlockEntity -> true);
             if(entities.isEmpty()) {
                 entity = ModEntities.CHAIR.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
             } else {

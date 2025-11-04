@@ -8,8 +8,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-public class ChairBlockEntity extends Entity {
-    public ChairBlockEntity(EntityType<?> entityType, Level level) {
+public class SeatBlockEntity extends Entity {
+    public SeatBlockEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
 

@@ -12,7 +12,7 @@ import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CeilingFanRenderer;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CoffeeTableRenderer;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
-import net.nhatjs.js_furniture_mod.entity.client.renderer.ChairRenderer;
+import net.nhatjs.js_furniture_mod.entity.client.renderer.SeatRenderer;
 
 public final class NhatJSFurnitureModClient {
     private NhatJSFurnitureModClient() {}
@@ -94,8 +94,8 @@ public final class NhatJSFurnitureModClient {
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_TOWER_GLASS.get(), RenderType.TRANSLUCENT);
 
-            EntityRenderers.register(ModEntities.CHAIR.get(), ChairRenderer::new);
-            EntityRenderers.register(ModEntities.SOFA.get(), ChairRenderer::new);
+            EntityRenderers.register(ModEntities.CHAIR.get(), SeatRenderer::new);
+            EntityRenderers.register(ModEntities.SOFA.get(), SeatRenderer::new);
 
             //1.0.2 update
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CEILING_FAN.get(), RenderType.cutoutMipped());
@@ -103,6 +103,10 @@ public final class NhatJSFurnitureModClient {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WHITE_GAMING_CHAIR.get(), RenderType.cutoutMipped());
             BlockEntityRenderers.register(ModBlockEntities.CEILING_FAN.get(), CeilingFanRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.COFFEE_TABLE.get(), CoffeeTableRenderer::new);
+            //end
+
+            //1.0.3 update
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.TOILET.get(), RenderType.cutoutMipped());
             //end
         });
     }
