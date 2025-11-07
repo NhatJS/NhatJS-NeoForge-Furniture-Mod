@@ -19,25 +19,33 @@ public class ModCreativeModeTabs {
                             .icon(() -> new ItemStack(ModBlocks.BLACK_TABLE.get()))
                                     .displayItems((parameters, output) -> {
                                         output.accept(ModBlocks.WOOD_CHAIR.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_CHAIR.get()); //1.0.4 update
                                         output.accept(ModBlocks.WHITE_CHAIR.get());
                                         output.accept(ModBlocks.MODERN_CHAIR.get());
                                         output.accept(ModBlocks.SOFA.get());
                                         output.accept(ModBlocks.WOOD_LIGHT_TABLE.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_TABLE.get()); //1.0.4 update
                                         output.accept(ModBlocks.BLACK_TABLE.get());
                                         output.accept(ModBlocks.WHITE_TABLE.get());
                                         output.accept(ModBlocks.WOOD_COFFEE_TABLE.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_COFFEE_TABLE.get()); //1.0.4 update
                                         output.accept(ModBlocks.WHITE_COFFEE_TABLE.get());
                                         output.accept(ModBlocks.WOOD_DESK.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_DESK.get()); //1.0.4 update
                                         output.accept(ModBlocks.WHITE_DESK.get());
                                         output.accept(ModBlocks.WOOD_STANDING_DESK.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_STANDING_DESK.get()); //1.0.4 update
                                         output.accept(ModBlocks.WOOD_STANDING_DESK_B.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_STANDING_DESK_B.get()); //1.0.4 update
                                         output.accept(ModBlocks.BLACK_STANDING_DESK.get());
                                         output.accept(ModBlocks.BLACK_STANDING_DESK_B.get());
                                         output.accept(ModBlocks.WHITE_STANDING_DESK.get());
                                         output.accept(ModBlocks.WHITE_STANDING_DESK_B.get());
                                         output.accept(ModBlocks.WOOD_3_DRAWER_DRESSER.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_3_DRAWER_DRESSER.get()); //1.0.4 update
                                         output.accept(ModBlocks.WHITE_3_DRAWER_DRESSER.get());
                                         output.accept(ModBlocks.WOOD_LIGHT_TV_STAND.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_TV_STAND.get()); //1.0.4 update
                                         output.accept(ModBlocks.WHITE_TV_STAND.get());
                                         output.accept(ModBlocks.KITCHEN_CABINET_BOTTOM.get());
                                         output.accept(ModBlocks.KITCHEN_CABINET_BOTTOM_WITH_SINK.get());
@@ -50,10 +58,23 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.KITCHEN_DRAWERS_B.get());
                                         output.accept(ModBlocks.KITCHEN_CABINET_TOP.get());
                                         output.accept(ModBlocks.KITCHEN_CABINET_TOP_B.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP.get()); //1.0.4 update
+                                        output.accept(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B.get()); //1.0.4 update
                                         output.accept(ModBlocks.WOOD_STRIPED_WALL.get());
+                                        output.accept(ModBlocks.WOOD_MEDIUM_STRIPED_WALL.get()); //1.0.4 update
                                         output.accept(ModBlocks.BLACK_MIRROR.get());
                                         output.accept(ModBlocks.VERTICAL_BLINDS.get());
                                         output.accept(ModBlocks.CEILING_FAN.get()); //1.0.2 update
+                                        output.accept(ModBlocks.CEILING_FAN_B.get()); //1.0.4 update
                                         output.accept(ModBlocks.SOCKET.get());
                                         output.accept(ModBlocks.TV.get());
                                         output.accept(ModBlocks.FLOOR_STANDING_SPEAKER.get());
@@ -74,6 +95,7 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.LAPTOP.get());
                                         output.accept(ModBlocks.PORTABLE_LAPTOP_STAND.get());
                                         output.accept(ModBlocks.LAPTOP_CLOSED_PORTABLE_LAPTOP_STAND.get());
+                                        output.accept(ModBlocks.MIDI_KEYBOARD_CONTROLLER.get()); //1.0.4 update
                                         output.accept(ModBlocks.MIDI_STANDALONE_GROOVEBOX.get());
                                         output.accept(ModBlocks.MIDI_STANDALONE_GROOVEBOX_2.get());
                                         output.accept(ModBlocks.MIDI_STANDALONE_GROOVEBOX_3.get());

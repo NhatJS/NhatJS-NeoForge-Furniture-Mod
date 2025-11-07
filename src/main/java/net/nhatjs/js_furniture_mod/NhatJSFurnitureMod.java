@@ -76,6 +76,7 @@ public class NhatJSFurnitureMod {
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener((ModelEvent.RegisterAdditional e) -> {
             e.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades")));
+            e.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades_b")));
         });
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
