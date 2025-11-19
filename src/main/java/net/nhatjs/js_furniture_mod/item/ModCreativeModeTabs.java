@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.WHITE_CHAIR.get());
                                         output.accept(ModBlocks.MODERN_CHAIR.get());
                                         output.accept(ModBlocks.SOFA.get());
+                                        output.accept(ModBlocks.BLACK_SOFA.get());
                                         output.accept(ModBlocks.WOOD_LIGHT_TABLE.get());
                                         output.accept(ModBlocks.WOOD_MEDIUM_TABLE.get()); //1.0.4 update
                                         output.accept(ModBlocks.BLACK_TABLE.get());
