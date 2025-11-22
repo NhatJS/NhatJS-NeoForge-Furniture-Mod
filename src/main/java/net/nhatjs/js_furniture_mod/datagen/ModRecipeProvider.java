@@ -5,7 +5,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -17,12 +16,28 @@ import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
-    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries);
+    public ModRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+        super(registries, output);
+    }
+
+    public static class Runner extends RecipeProvider.Runner {
+        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider) {
+            super(packOutput, provider);
+        }
+
+        @Override
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+            return new ModRecipeProvider(provider, recipeOutput);
+        }
+
+        @Override
+        public String getName() {
+            return "NhatJSFurnitureMod Recipes";
+        }
     }
 
     @Override
-    public void buildRecipes(RecipeOutput recipeOutput) {
+    public void buildRecipes() {
         //wood
         Item saplingOak = Items.OAK_SAPLING;
         Block planksBirch = Blocks.BIRCH_PLANKS;
@@ -78,7 +93,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         Item bucket = Items.BUCKET;
         Block flowerPot = Blocks.FLOWER_POT;
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_GAMING_CHAIR)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_GAMING_CHAIR)
                 .pattern("1  ")
                 .pattern("121")
                 .pattern("3 3")
@@ -88,9 +103,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_wool", has(woolBlack))
                 .unlockedBy("has_white_wool", has(woolWhite))
                 .unlockedBy("has_black_concrete", has(concreteBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_MIRROR)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_MIRROR)
                 .pattern("1")
                 .pattern("2")
                 .pattern("1")
@@ -98,16 +113,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', glassPane)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_glass_pane", has(glassPane))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_SOFA, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_SOFA, 2)
                 .pattern("111")
                 .pattern("111")
                 .define('1', woolBlack)
                 .unlockedBy("has_black_wool", has(woolBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_STANDING_DESK)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_STANDING_DESK)
                 .pattern("111")
                 .pattern("223")
                 .pattern("1 1")
@@ -117,9 +132,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_STANDING_DESK_B)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_STANDING_DESK_B)
                 .pattern("111")
                 .pattern("223")
                 .pattern("4 4")
@@ -131,17 +146,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_TABLE, 2)
                 .pattern("111")
                 .pattern("1 1")
                 .pattern("1 1")
                 .define('1', concreteBlack)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BOOKS, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.BOOKS, 2)
                 .pattern("232")
                 .pattern("111")
                 .pattern("232")
@@ -151,44 +166,44 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_book", has(book))
                 .unlockedBy("has_white_dye", has(dyeWhite))
                 .unlockedBy("has_black_dye", has(dyeBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.CEILING_FAN)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.CEILING_FAN)
                 .pattern(" 2 ")
                 .pattern("111")
                 .define('1', concreteBlack)
                 .define('2', redstone)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.CEILING_FAN_B)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.CEILING_FAN_B)
                 .pattern(" 2 ")
                 .pattern("111")
                 .define('1', concreteWhite)
                 .define('2', redstone)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.COMPUTER_MOUSE)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.COMPUTER_MOUSE)
                 .pattern("2")
                 .pattern("1")
                 .define('1', concreteBlack)
                 .define('2', redstone)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.COOKTOP)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.COOKTOP)
                 .pattern("121")
                 .define('1', concreteBlack)
                 .define('2', redstone)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.FLOOR_STANDING_SPEAKER)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.FLOOR_STANDING_SPEAKER)
                 .pattern("2")
                 .pattern("1")
                 .pattern("1")
@@ -196,9 +211,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', noteBlock)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_note_block", has(noteBlock))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.FRIDGE_A)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.FRIDGE_A)
                 .pattern("414")
                 .pattern("232")
                 .pattern("414")
@@ -210,9 +225,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_iron_block", has(ironBlock))
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_gray_concrete", has(concreteGray))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.FRIDGE_B)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.FRIDGE_B)
                 .pattern("414")
                 .pattern("232")
                 .pattern("414")
@@ -224,18 +239,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_iron_block", has(ironBlock))
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KEYBOARD)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KEYBOARD)
                 .pattern("121")
                 .pattern("111")
                 .define('1', concreteBlack)
                 .define('2', redstone)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM, 2)
                 .pattern("333")
                 .pattern("111")
                 .pattern("121")
@@ -245,9 +260,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_birch_slab", has(slabBirch))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_2, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_2, 2)
                 .pattern("131")
                 .pattern("111")
                 .pattern("121")
@@ -257,9 +272,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_2_EXTRA, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_2_EXTRA, 2)
                 .pattern("111")
                 .pattern("131")
                 .pattern("121")
@@ -269,9 +284,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B, 2)
                 .pattern("333")
                 .pattern("111")
                 .pattern("121")
@@ -281,9 +296,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B_2, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B_2, 2)
                 .pattern("111")
                 .pattern("111")
                 .pattern("121")
@@ -291,9 +306,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B_WITH_SINK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B_WITH_SINK, 2)
                 .pattern("343")
                 .pattern("111")
                 .pattern("121")
@@ -305,9 +320,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_WITH_SINK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_WITH_SINK, 2)
                 .pattern("343")
                 .pattern("111")
                 .pattern("121")
@@ -319,9 +334,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_birch_slab", has(slabBirch))
                 .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_TOP, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_TOP, 2)
                 .pattern("11")
                 .pattern("23")
                 .pattern("11")
@@ -331,9 +346,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_TOP_B, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_TOP_B, 2)
                 .pattern("11")
                 .pattern("21")
                 .pattern("11")
@@ -341,9 +356,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_DRAWERS, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_DRAWERS, 2)
                 .pattern("323")
                 .pattern("121")
                 .pattern("121")
@@ -353,9 +368,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_birch_slab", has(slabBirch))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_DRAWERS_B, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_DRAWERS_B, 2)
                 .pattern("323")
                 .pattern("121")
                 .pattern("121")
@@ -365,9 +380,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP)
                 .pattern("111")
                 .pattern("523")
                 .pattern("141")
@@ -381,18 +396,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_stone_button", has(buttonStone))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_note_block", has(noteBlock))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP_CLOSED_PORTABLE_LAPTOP_STAND)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP_CLOSED_PORTABLE_LAPTOP_STAND)
                 .pattern("1")
                 .pattern("2")
                 .define('1', laptop)
                 .define('2', portableLaptopStand)
                 .unlockedBy("has_laptop", has(laptop))
                 .unlockedBy("has_portable_laptop_stand", has(portableLaptopStand))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_FLOOR_LAMP, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_FLOOR_LAMP, 2)
                 .pattern(" 1 ")
                 .pattern(" 2 ")
                 .pattern("111")
@@ -400,9 +415,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', redstoneLamp)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone_lamp", has(redstoneLamp))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_FLOOR_LAMP_RGB_OFF, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_FLOOR_LAMP_RGB_OFF, 2)
                 .pattern(" 1")
                 .pattern(" 2")
                 .pattern("11")
@@ -410,9 +425,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', redstoneLamp)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone_lamp", has(redstoneLamp))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_RGB_TRIANGLE_PANEL)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_RGB_TRIANGLE_PANEL)
                 .pattern("12 ")
                 .pattern("131")
                 .pattern(" 21")
@@ -422,9 +437,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone_lamp", has(redstoneLamp))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_KEYBOARD_CONTROLLER)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_KEYBOARD_CONTROLLER)
                 .pattern("111")
                 .pattern("244")
                 .pattern("311")
@@ -436,9 +451,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_stone_button", has(buttonStone))
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX)
                 .pattern("111")
                 .pattern("132")
                 .pattern("222")
@@ -448,9 +463,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_stone_button", has(buttonStone))
                 .unlockedBy("has_end_crystal", has(endCrystal))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX_2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX_2)
                 .pattern("424")
                 .pattern("232")
                 .pattern("121")
@@ -462,24 +477,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_stone_button", has(buttonStone))
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX_3)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX_3)
                 .pattern("11")
                 .define('1', midiGroovebox)
                 .unlockedBy("has_midi_standalone_groovebox", has(midiGroovebox))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_BATHROOM_MIRROR_SHELF)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_BATHROOM_MIRROR_SHELF)
                 .pattern("121")
                 .pattern("111")
                 .define('1', concreteBlack)
                 .define('2', glassPane)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_glass_pane", has(glassPane))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_BATHROOM_SINK_STORAGE)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_BATHROOM_SINK_STORAGE)
                 .pattern(" 2 ")
                 .pattern("111")
                 .pattern("222")
@@ -487,9 +502,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', concreteBlack)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_black_concrete", has(concreteBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_CHAIR, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_CHAIR, 4)
                 .pattern("2  ")
                 .pattern("121")
                 .pattern("1 1")
@@ -497,17 +512,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', woolWhite)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_LIGHT, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_LIGHT, 4)
                 .pattern("121")
                 .define('1', concreteBlack)
                 .define('2', redstoneLamp)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone_lamp", has(redstoneLamp))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MONITOR)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MONITOR)
                 .pattern("121")
                 .pattern(" 3 ")
                 .pattern(" 1 ")
@@ -517,9 +532,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_glass_pane", has(glassPane))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MONITOR_SETUP)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MONITOR_SETUP)
                 .pattern("14")
                 .pattern("23")
                 .define('1', monitor)
@@ -530,9 +545,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_keyboard", has(keyboard))
                 .unlockedBy("has_computer_mouse", has(computerMouse))
                 .unlockedBy("has_black_carpet", has(carpetBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PC)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.PC)
                 .pattern("114")
                 .pattern("322")
                 .pattern("111")
@@ -544,18 +559,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_stone_button", has(buttonStone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PC_TOWER_GLASS)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.PC_TOWER_GLASS)
                 .pattern("21")
                 .pattern("21")
                 .define('1', concreteBlack)
                 .define('2', glassPane)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_glass_pane", has(glassPane))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PLANT_POT)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.PLANT_POT)
                 .pattern(" 3 ")
                 .pattern("121")
                 .define('1', ironIngot)
@@ -564,25 +579,25 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_iron_ingot", has(ironIngot))
                 .unlockedBy("has_flower_pot", has(flowerPot))
                 .unlockedBy("has_oak_sapling", has(saplingOak))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PORTABLE_LAPTOP_STAND)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.PORTABLE_LAPTOP_STAND)
                 .pattern("1 1")
                 .pattern("111")
                 .pattern("1 1")
                 .define('1', ironIngot)
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.SHOWER)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.SHOWER)
                 .pattern("21")
                 .define('1', dyeBlack)
                 .define('2', ironIngot)
                 .unlockedBy("has_black_dye", has(dyeBlack))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.SOCKET, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.SOCKET, 4)
                 .pattern("1")
                 .pattern("2")
                 .pattern("1")
@@ -590,16 +605,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', redstone)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.SOFA, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.SOFA, 2)
                 .pattern("111")
                 .pattern("111")
                 .define('1', woolWhite)
                 .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.STUDIO_LIGHT, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.STUDIO_LIGHT, 2)
                 .pattern("121")
                 .pattern(" 1 ")
                 .pattern("1 1")
@@ -607,17 +622,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', redstoneLamp)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone_lamp", has(redstoneLamp))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.TOILET)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.TOILET)
                 .pattern("1  ")
                 .pattern("111")
                 .pattern("11 ")
                 .define('1', concreteWhite)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.TV)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.TV)
                 .pattern("121")
                 .pattern("131")
                 .define('1', concreteBlack)
@@ -626,9 +641,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_white_dye", has(dyeWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.VERTICAL_BLINDS)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.VERTICAL_BLINDS)
                 .pattern("111")
                 .pattern("222")
                 .pattern("222")
@@ -636,9 +651,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', bannerWhite)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_white_banner", has(bannerWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WASHING_MACHINE_AI)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WASHING_MACHINE_AI)
                 .pattern("121")
                 .pattern("1 1")
                 .pattern("131")
@@ -648,9 +663,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gray_concrete", has(concreteGray))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_end_crystal", has(endCrystal))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_3_DRAWER_DRESSER, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_3_DRAWER_DRESSER, 2)
                 .pattern("121")
                 .pattern("121")
                 .pattern("121")
@@ -658,9 +673,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_CHAIR, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_CHAIR, 4)
                 .pattern("2  ")
                 .pattern("122")
                 .pattern("1 1")
@@ -668,16 +683,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', woolWhite)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_COFFEE_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_COFFEE_TABLE, 2)
                 .pattern("111")
                 .pattern("1 1")
                 .define('1', concreteWhite)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_DESK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_DESK, 2)
                 .pattern("121")
                 .pattern("1 1")
                 .pattern("1 1")
@@ -685,9 +700,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_GAMING_CHAIR)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_GAMING_CHAIR)
                 .pattern("1  ")
                 .pattern("121")
                 .pattern("3 3")
@@ -697,9 +712,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_white_wool", has(woolWhite))
                 .unlockedBy("has_black_wool", has(woolBlack))
                 .unlockedBy("has_black_concrete", has(concreteBlack))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_STANDING_DESK)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_STANDING_DESK)
                 .pattern("222")
                 .pattern("334")
                 .pattern("1 1")
@@ -711,9 +726,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_STANDING_DESK_B)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_STANDING_DESK_B)
                 .pattern("222")
                 .pattern("334")
                 .pattern("2 2")
@@ -723,26 +738,26 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TABLE, 2)
                 .pattern("111")
                 .pattern("1 1")
                 .pattern("1 1")
                 .define('1', concreteWhite)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TV_STAND)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TV_STAND)
                 .pattern("111")
                 .pattern("212")
                 .define('1', concreteWhite)
                 .define('2', chest)
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_3_DRAWER_DRESSER, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_3_DRAWER_DRESSER, 2)
                 .pattern("121")
                 .pattern("121")
                 .pattern("121")
@@ -750,9 +765,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_CHAIR, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_CHAIR, 4)
                 .pattern("2  ")
                 .pattern("122")
                 .pattern("1 1")
@@ -760,16 +775,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', woolWhite)
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_COFFEE_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_COFFEE_TABLE, 2)
                 .pattern("111")
                 .pattern("1 1")
                 .define('1', planksBirch)
                 .unlockedBy("has_birch_planks", has(planksBirch))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_DESK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_DESK, 2)
                 .pattern("121")
                 .pattern("1 1")
                 .pattern("1 1")
@@ -777,9 +792,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TABLE, 2)
                 .pattern("222")
                 .pattern("1 1")
                 .pattern("1 1")
@@ -787,18 +802,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', planksBirch)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_birch_planks", has(planksBirch))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TV_STAND, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TV_STAND, 2)
                 .pattern("211")
                 .pattern("1 1")
                 .define('1', planksBirch)
                 .define('2', concreteWhite)
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_3_DRAWER_DRESSER, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_3_DRAWER_DRESSER, 2)
                 .pattern("121")
                 .pattern("121")
                 .pattern("121")
@@ -806,9 +821,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_CHAIR, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_CHAIR, 4)
                 .pattern("2  ")
                 .pattern("122")
                 .pattern("1 1")
@@ -816,16 +831,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', woolWhite)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_COFFEE_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_COFFEE_TABLE, 2)
                 .pattern("111")
                 .pattern("1 1")
                 .define('1', planksJungle)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_DESK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_DESK, 2)
                 .pattern("121")
                 .pattern("1 1")
                 .pattern("1 1")
@@ -833,9 +848,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM, 2)
                 .pattern("333")
                 .pattern("111")
                 .pattern("121")
@@ -845,9 +860,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_jungle_slab", has(slabJungle))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2, 2)
                 .pattern("131")
                 .pattern("111")
                 .pattern("121")
@@ -857,9 +872,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA, 2)
                 .pattern("111")
                 .pattern("131")
                 .pattern("121")
@@ -869,9 +884,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B, 2)
                 .pattern("333")
                 .pattern("111")
                 .pattern("121")
@@ -881,9 +896,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2, 2)
                 .pattern("111")
                 .pattern("111")
                 .pattern("121")
@@ -891,9 +906,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK, 2)
                 .pattern("343")
                 .pattern("111")
                 .pattern("121")
@@ -905,9 +920,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK, 2)
                 .pattern("343")
                 .pattern("111")
                 .pattern("121")
@@ -919,9 +934,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_jungle_slab", has(slabJungle))
                 .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP, 2)
                 .pattern("11")
                 .pattern("23")
                 .pattern("11")
@@ -931,9 +946,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B, 2)
                 .pattern("11")
                 .pattern("21")
                 .pattern("11")
@@ -941,9 +956,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', chest)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS, 2)
                 .pattern("323")
                 .pattern("121")
                 .pattern("121")
@@ -953,9 +968,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_jungle_slab", has(slabJungle))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B, 2)
                 .pattern("323")
                 .pattern("121")
                 .pattern("121")
@@ -965,9 +980,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_chest", has(chest))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STANDING_DESK)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STANDING_DESK)
                 .pattern("222")
                 .pattern("334")
                 .pattern("1 1")
@@ -979,9 +994,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STANDING_DESK_B)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STANDING_DESK_B)
                 .pattern("222")
                 .pattern("334")
                 .pattern("1 1")
@@ -993,17 +1008,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STRIPED_WALL, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STRIPED_WALL, 4)
                 .pattern("111")
                 .pattern("111")
                 .pattern("111")
                 .define('1', planksJungle)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TABLE, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TABLE, 2)
                 .pattern("222")
                 .pattern("1 1")
                 .pattern("1 1")
@@ -1011,18 +1026,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', planksJungle)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_jungle_planks", has(planksJungle))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TV_STAND, 2)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TV_STAND, 2)
                 .pattern("211")
                 .pattern("1 1")
                 .define('1', planksJungle)
                 .define('2', concreteWhite)
                 .unlockedBy("has_jungle_planks", has(planksJungle))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STANDING_DESK)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STANDING_DESK)
                 .pattern("222")
                 .pattern("334")
                 .pattern("1 1")
@@ -1034,9 +1049,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STANDING_DESK_B)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STANDING_DESK_B)
                 .pattern("222")
                 .pattern("334")
                 .pattern("1 1")
@@ -1048,14 +1063,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_birch_planks", has(planksBirch))
                 .unlockedBy("has_redstone", has(redstone))
                 .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STRIPED_WALL, 4)
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STRIPED_WALL, 4)
                 .pattern("111")
                 .pattern("111")
                 .pattern("111")
                 .define('1', planksBirch)
                 .unlockedBy("has_birch_planks", has(planksBirch))
-                .save(recipeOutput);
+                .save(output);
     }
 }

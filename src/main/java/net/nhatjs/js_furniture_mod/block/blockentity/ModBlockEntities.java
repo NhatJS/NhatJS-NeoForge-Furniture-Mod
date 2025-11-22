@@ -13,18 +13,20 @@ import java.util.function.Supplier;
 
 public final class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, NhatJSFurnitureMod.MOD_ID);
-//1.0.2 update
+
+    //1.0.2 update
     public static final Supplier<BlockEntityType<CeilingFanBlockEntity>> CEILING_FAN = BLOCK_ENTITIES.register("ceiling_fan", () ->
-        BlockEntityType.Builder.of(CeilingFanBlockEntity::new,
+        new BlockEntityType<>(CeilingFanBlockEntity::new,
                 ModBlocks.CEILING_FAN.get(),
-                ModBlocks.CEILING_FAN_B.get()).build(null));
+                ModBlocks.CEILING_FAN_B.get()));
 
     public static final Supplier<BlockEntityType<CoffeeTableBlockEntity>> COFFEE_TABLE = BLOCK_ENTITIES.register("coffee_table", () ->
-            BlockEntityType.Builder.of(CoffeeTableBlockEntity::new,
+            new BlockEntityType<>(CoffeeTableBlockEntity::new,
                     ModBlocks.WOOD_COFFEE_TABLE.get(),
                     ModBlocks.WHITE_COFFEE_TABLE.get(),
-                    ModBlocks.WOOD_MEDIUM_COFFEE_TABLE.get()).build(null));
-//end
+                    ModBlocks.WOOD_MEDIUM_COFFEE_TABLE.get()));
+    //end
+
     public static void registerModBlockEntities() {
         NhatJSFurnitureMod.LOGGER.info("Registering Mod Entities for " + NhatJSFurnitureMod.MOD_ID);
     }
