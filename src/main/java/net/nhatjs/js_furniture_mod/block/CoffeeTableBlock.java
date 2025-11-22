@@ -33,6 +33,7 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
 
     public CoffeeTableBlock(Properties settings) {
         super(settings);
+        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(HAS_ITEM, false));
     }
 
     private static final VoxelShape HORIZONTAL = Shapes.or(

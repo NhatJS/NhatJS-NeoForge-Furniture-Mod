@@ -2,91 +2,71 @@ package net.nhatjs.js_furniture_mod.block.blockentity.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
+import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CoffeeTableRenderer implements BlockEntityRenderer<CoffeeTableBlockEntity, CoffeeTableRenderState> {
-    private final ItemModelResolver itemModelResolver;
-
-    public CoffeeTableRenderer(BlockEntityRendererProvider.Context ctx) {
-        itemModelResolver = ctx.itemModelResolver();
-    }
+public class CoffeeTableRenderer implements BlockEntityRenderer<CoffeeTableBlockEntity> {
+    public CoffeeTableRenderer(BlockEntityRendererProvider.Context ctx) {}
 
     private final Map<BlockPos, Integer> lastNonce = new HashMap<>();
 
     @Override
-    public CoffeeTableRenderState createRenderState() {
-        return new CoffeeTableRenderState();
-    }
+    public void render(CoffeeTableBlockEntity be, float tickDelta, PoseStack ps,
+                       MultiBufferSource buf, int light, int overlay, Vec3 vec3) {
+        if (be.isRemoved() || be.getLevel() == null) return;
 
-    @Override
-    public void extractRenderState(CoffeeTableBlockEntity blockEntity,
-                                   CoffeeTableRenderState state,
-                                   float tickProgress, Vec3 cameraPos,
-                                   @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, tickProgress, cameraPos, crumblingOverlay);
+        BlockState st = be.getBlockState();
+        ItemStack stack = be.getItem();
+        if (stack.isEmpty()) return;
+        if (st.hasProperty(CoffeeTableBlock.HAS_ITEM) &&  !st.getValue(CoffeeTableBlock.HAS_ITEM)) return;
 
-        state.pos = blockEntity.getBlockPos();
-        state.level = blockEntity.getLevel();
-
-        BlockState st = blockEntity.getBlockState();
-        Direction f = st.getValue(CoffeeTableBlock.FACING);
-        state.yaw = switch (f) {
-            default -> 0f;
-            case SOUTH -> 180f;
-            case WEST  -> 90f;
-            case EAST  -> 270f;
-        };
-        ItemStack stack = blockEntity.getItem();
-        if (stack.isEmpty()) {
-            state.itemStackRenderState.clear();
+        int now = be.getRenderNonce();
+        Integer prev = lastNonce.get(be.getBlockPos());
+        if (prev == null || prev != now) {
+            lastNonce.put(be.getBlockPos(), now);
             return;
         }
 
-        itemModelResolver.updateForTopItem(state.itemStackRenderState,
-                blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getLevel(), null, 0);
+        ps.pushPose();
+        ps.translate(0.5, 0.6, 0.5);
+        if (st.hasProperty(CoffeeTableBlock.FACING)) {
+            Direction facing = st.getValue(CoffeeTableBlock.FACING);
+            float rotation = switch (facing) {
+                default -> 0f;
+                case SOUTH -> 180f;
+                case WEST -> 90f;
+                case EAST -> 270f;
+            };
+            ps.mulPose(Axis.YP.rotationDegrees(rotation));
+        }
+        ps.mulPose(Axis.XP.rotationDegrees(90));
+        if (stack.is(ModBlocks.LAPTOP.asItem()) || stack.is(ModBlocks.LAPTOP_CLOSED_PORTABLE_LAPTOP_STAND.asItem())
+                || stack.is(ModBlocks.PLANT_POT.asItem()) || stack.is(ModBlocks.PORTABLE_LAPTOP_STAND.asItem())
+                || stack.is(ModBlocks.MIDI_STANDALONE_GROOVEBOX.asItem()) || stack.is(ModBlocks.MIDI_STANDALONE_GROOVEBOX_2.asItem())
+                || stack.is(ModBlocks.MIDI_STANDALONE_GROOVEBOX_3.asItem()) || stack.is(ModBlocks.MIDI_KEYBOARD_CONTROLLER.asItem())) {
+            ps.scale(1.0f, 1.0f, 1.0f);
+        }
+        else {
+            ps.scale(0.5f, 0.5f, 0.5f);
+        }
+
+
+        Minecraft.getInstance().getItemRenderer()
+                .renderStatic(stack, ItemDisplayContext.FIXED, light, overlay, ps, buf, be.getLevel(), 0);
+        ps.popPose();
     }
-
-    @Override
-    public void submit(CoffeeTableRenderState state, PoseStack pose, SubmitNodeCollector queue, CameraRenderState cameraState) {
-        pose.pushPose();
-
-        pose.translate(0.5f, 0.6f, 0.5f);
-        pose.mulPose(Axis.YP.rotationDegrees(state.yaw));
-        pose.mulPose(Axis.XP.rotationDegrees(90f));
-        pose.scale(0.5f, 0.5f, 0.5f);
-
-        state.itemStackRenderState.submit(pose, queue, getLightLevel(state.level, state.pos), OverlayTexture.NO_OVERLAY, 0);
-
-        pose.popPose();
-    }
-
-
-
-    private int getLightLevel(Level level, BlockPos pos) {
-        int bLight = level.getBrightness(LightLayer.BLOCK, pos);
-        int sLight = level.getBrightness(LightLayer.SKY, pos);
-        return LightTexture.pack(bLight, sLight);
-    }
-
 }

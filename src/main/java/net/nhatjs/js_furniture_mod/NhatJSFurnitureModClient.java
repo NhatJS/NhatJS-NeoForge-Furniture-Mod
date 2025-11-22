@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
@@ -16,16 +17,22 @@ import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CoffeeTable
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.entity.client.renderer.SeatRenderer;
 
-public class NhatJSFurnitureModClient {
+public final class NhatJSFurnitureModClient {
     public static void init(IEventBus eventBus) {
         eventBus.addListener(NhatJSFurnitureModClient::onClientSetup);
     }
 
     public static final ResourceLocation CEILING_FAN_BLADES = ResourceLocation.fromNamespaceAndPath(
             NhatJSFurnitureMod.MOD_ID, "block/ceiling_fan_blades");
+    public static final ResourceLocation CEILING_FAN_BLADES_B = ResourceLocation.fromNamespaceAndPath(
+            NhatJSFurnitureMod.MOD_ID, "block/ceiling_fan_blades_b");
 
     public static final StandaloneModelKey<BlockStateModel> CEILING_FAN_BLADES_ID = new StandaloneModelKey<BlockStateModel>(CEILING_FAN_BLADES::getPath);
+    public static final StandaloneModelKey<BlockStateModel> CEILING_FAN_BLADES_B_ID = new StandaloneModelKey<BlockStateModel>(CEILING_FAN_BLADES_B::getPath);
 
+
+    @SubscribeEvent
+    @SuppressWarnings({"deprecated", "removal"})
     private static void onClientSetup(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_CHAIR.get(), ChunkSectionLayer.CUTOUT_MIPPED);
@@ -110,6 +117,32 @@ public class NhatJSFurnitureModClient {
 
             //1.0.3 update
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.TOILET.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            //end
+
+            //1.0.4 update
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.CEILING_FAN_B.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.BLACK_SOFA.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MIDI_KEYBOARD_CONTROLLER.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_TV_STAND.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_3_DRAWER_DRESSER.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_CHAIR.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_COFFEE_TABLE.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_DESK.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_STANDING_DESK.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_STANDING_DESK_B.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_STRIPED_WALL.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_TABLE.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP.get(), ChunkSectionLayer.CUTOUT_MIPPED);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B.get(), ChunkSectionLayer.CUTOUT_MIPPED);
             //end
         });
     }

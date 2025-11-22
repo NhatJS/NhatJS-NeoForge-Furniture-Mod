@@ -1,5 +1,7 @@
 package net.nhatjs.js_furniture_mod.block;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +11,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
@@ -28,6 +31,32 @@ import java.util.List;
 public class SofaBlock extends Block {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<Part> PART = EnumProperty.create("part", Part.class);
+
+    private static final MapCodec<SofaBlock> CODEC = RecordCodecBuilder.mapCodec(builder -> {
+        return builder.group(DyeColor.CODEC.fieldOf("color").forGetter(block -> {
+            return block.color;
+        }), propertiesCodec()).apply(builder, SofaBlock::new);
+    });
+
+    private final DyeColor color;
+
+    public SofaBlock(DyeColor color, Properties settings)
+    {
+        super(settings);
+        this.color = color;
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(PART, Part.SINGLE));
+    }
+
+    public DyeColor getColor()
+    {
+        return this.color;
+    }
+
+    @Override
+    public MapCodec<SofaBlock> codec()
+    {
+        return CODEC;
+    }
 
     public enum Part implements StringRepresentable
     {
@@ -50,11 +79,6 @@ public class SofaBlock extends Block {
         {
             return name;
         }
-    }
-
-    public SofaBlock(Properties settings) {
-        super(settings);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(PART, Part.SINGLE));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -26,7 +27,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> WHITE_CHAIR = registerBlock("white_chair",
             (properties) -> new ChairBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> SOFA = registerBlock("sofa",
-            (properties) -> new SofaBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+            (properties) -> new SofaBlock(DyeColor.WHITE, properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> WOOD_LIGHT_TABLE = registerBlock("wood_light_table",
             (properties) -> new WoodTableBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> BLACK_TABLE = registerBlock("black_table",
@@ -104,7 +105,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> LED_FLOOR_LAMP_RGB_OFF = registerBlock("led_floor_lamp_rgb_off",
             (properties) -> new LEDFloorLampRGBBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> LED_FLOOR_LAMP_RGB_OFF_2 = registerBlock("led_floor_lamp_rgb_off_2",
-            (properties) -> new LEDFloorLampRGBAltBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+            (properties) -> new LEDFloorLampRGBAltBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion().noLootTable()));
     public static final DeferredBlock<Block> LED_RGB_TRIANGLE_PANEL = registerBlock("led_rgb_triangle_panel",
             (properties) -> new LEDRGBTrianglePanelBlock(properties.mapColor(MapColor.STONE).strength(0.8f).noOcclusion()));
     public static final DeferredBlock<Block> STUDIO_LIGHT = registerBlock("studio_light",
@@ -122,7 +123,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> PC_RGB1_OFF = registerBlock("pc_rgb1_off",
             (properties) -> new DesktopAltBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> PC_TOWER_GLASS = registerBlock("pc_tower_glass",
-            (properties) -> new DesktopTowerGlassBlock(properties.mapColor(MapColor.STONE).sound(SoundType.GLASS).strength(0.4f).noOcclusion().noCollision()));
+            (properties) -> new DesktopTowerGlassBlock(properties.mapColor(MapColor.STONE).sound(SoundType.GLASS).strength(0.4f).noOcclusion().noCollission()));
     public static final DeferredBlock<Block> LAPTOP = registerBlock("laptop",
             (properties) -> new LaptopBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> PORTABLE_LAPTOP_STAND = registerBlock("portable_laptop_stand",
@@ -156,7 +157,7 @@ public class ModBlocks {
 
     //1.0.2 update
     public static final DeferredBlock<Block> CEILING_FAN = registerBlock("ceiling_fan",
-            (properties) -> new CeilingFanBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+            (properties) -> new CeilingFanBlock(DyeColor.BLACK, properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> BLACK_GAMING_CHAIR = registerBlock("black_gaming_chair",
             (properties) -> new ChairBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> WHITE_GAMING_CHAIR = registerBlock("white_gaming_chair",
@@ -166,6 +167,55 @@ public class ModBlocks {
     //1.0.3 update
     public static final DeferredBlock<Block> TOILET = registerBlock("toilet",
             (properties) -> new ToiletBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    //end
+
+    //1.0.4 update
+    public static final DeferredBlock<Block> CEILING_FAN_B = registerBlock("ceiling_fan_b",
+            (properties) -> new CeilingFanBlock(DyeColor.WHITE, properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> BLACK_SOFA = registerBlock("black_sofa",
+            (properties) -> new SofaBlock(DyeColor.BLACK, properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> MIDI_KEYBOARD_CONTROLLER = registerBlock("midi_keyboard_controller",
+            (properties) -> new MIDIKeyboardBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_TV_STAND = registerBlock("wood_medium_tv_stand",
+            (properties) -> new TVStandBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_3_DRAWER_DRESSER = registerBlock("wood_medium_3_drawer_dresser",
+            (properties) -> new ThreeDrawerDresserBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_CHAIR = registerBlock("wood_medium_chair",
+            (properties) -> new ChairBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_COFFEE_TABLE = registerBlock("wood_medium_coffee_table",
+            (properties) -> new CoffeeTableBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_DESK = registerBlock("wood_medium_desk",
+            (properties) -> new DeskBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_STANDING_DESK = registerBlock("wood_medium_standing_desk",
+            (properties) -> new StandingDeskBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_STANDING_DESK_B = registerBlock("wood_medium_standing_desk_b",
+            (properties) -> new StandingDeskBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_STRIPED_WALL = registerBlock("wood_medium_striped_wall",
+            (properties) -> new WoodStripedWallBlock(properties.mapColor(MapColor.STONE).strength(0.3f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_TABLE = registerBlock("wood_medium_table",
+            (properties) -> new WoodTableBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM = registerBlock("wood_medium_kitchen_cabinet_bottom",
+            (properties) ->   new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK = registerBlock("wood_medium_kitchen_cabinet_bottom_with_sink",
+            (properties) ->   new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2 = registerBlock("wood_medium_kitchen_cabinet_bottom_2",
+            (properties) ->   new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA = registerBlock("wood_medium_kitchen_cabinet_bottom_2_extra",
+            (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B = registerBlock("wood_medium_kitchen_cabinet_bottom_b",
+            (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK = registerBlock("wood_medium_kitchen_cabinet_bottom_b_with_sink",
+            (properties) -> new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2 = registerBlock("wood_medium_kitchen_cabinet_bottom_b_2",
+            (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_TOP = registerBlock("wood_medium_kitchen_cabinet_top",
+            (properties) ->  new KitchenTopBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_CABINET_TOP_B = registerBlock("wood_medium_kitchen_cabinet_top_b",
+            (properties) ->  new KitchenTopBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_DRAWERS = registerBlock("wood_medium_kitchen_drawers",
+            (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_DRAWERS_B = registerBlock("wood_medium_kitchen_drawers_b",
+            (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     //end
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> function) {
