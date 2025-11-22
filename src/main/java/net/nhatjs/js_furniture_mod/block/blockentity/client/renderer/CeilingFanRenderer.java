@@ -13,7 +13,6 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.nhatjs.js_furniture_mod.NhatJSFurnitureModClient;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.CeilingFanBlockEntity;
 
@@ -40,10 +39,10 @@ public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEn
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();
-        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(be.getBlockState(), ps, buf, light, overlay);
+        //Minecraft.getInstance().getBlockRenderer().renderSingleBlock(be.getBlockState(), ps, buf, light, overlay);
 
         if (blades_black == null || blades_white == null ||
-                blades_white == Minecraft.getInstance().getModelManager().getMissingModel() ||
+                blades_black == Minecraft.getInstance().getModelManager().getMissingModel() ||
                 blades_white == Minecraft.getInstance().getModelManager().getMissingModel()) {
             return;
         }
