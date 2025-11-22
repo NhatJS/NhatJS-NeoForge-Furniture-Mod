@@ -3,7 +3,6 @@ package net.nhatjs.js_furniture_mod.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +32,7 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
 
     public CoffeeTableBlock(Properties settings) {
         super(settings);
+        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(HAS_ITEM, false));
     }
 
     private static final VoxelShape HORIZONTAL = Shapes.or(
@@ -106,16 +106,17 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean moved) {
-        if (state.getBlock() != state.getBlock()) {
+    public void onRemove(BlockState state, Level level, BlockPos pos,
+                                BlockState newState, boolean moved) {
+        if (state.getBlock() != newState.getBlock()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CoffeeTableBlockEntity ct) {
                 ItemStack s = ct.getItem();
                 NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
                 items.set(0, s);
             }
-            super.affectNeighborsAfterRemoval(state, level, pos, moved);
-        } else super.affectNeighborsAfterRemoval(state, level, pos, moved);
+            super.onRemove(state, level, pos, newState, moved);
+        } else super.onRemove(state, level, pos, newState, moved);
     }
 
     @Override

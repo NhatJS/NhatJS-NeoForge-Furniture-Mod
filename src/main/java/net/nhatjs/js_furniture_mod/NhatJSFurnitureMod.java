@@ -1,14 +1,13 @@
 package net.nhatjs.js_furniture_mod;
 
-import net.minecraft.client.renderer.block.model.SimpleUnbakedGeometry;
-import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.client.model.standalone.StandaloneModelBaker;
-import net.neoforged.neoforge.client.model.standalone.UnbakedStandaloneModel;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
+import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CeilingFanRenderer;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
 import net.nhatjs.js_furniture_mod.item.ModItems;
@@ -46,8 +45,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static net.nhatjs.js_furniture_mod.NhatJSFurnitureModClient.CEILING_FAN_BLADES;
-
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(NhatJSFurnitureMod.MOD_ID)
 public class NhatJSFurnitureMod {
@@ -77,9 +74,9 @@ public class NhatJSFurnitureMod {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
-        modEventBus.addListener((ModelEvent.RegisterStandalone e) -> {
-            e.register(NhatJSFurnitureModClient.CEILING_FAN_BLADES_ID,
-                    StandaloneModelBaker.blockStateModel());
+        modEventBus.addListener((ModelEvent.RegisterAdditional e) -> {
+            e.register(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades"), "standalone").id());
+            e.register(new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades_b"), "standalone").id());
         });
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
@@ -101,6 +98,7 @@ public class NhatJSFurnitureMod {
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @EventBusSubscriber(modid = NhatJSFurnitureMod.MOD_ID, value = Dist.CLIENT)
     static class ClientModEvents {
         @SubscribeEvent
         static void onClientSetup(FMLClientSetupEvent event) {
