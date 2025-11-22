@@ -48,7 +48,7 @@ public class NhatJSFurnitureMod {
         ModEntities.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             NhatJSFurnitureModClient.init(modEventBus);
         }
 

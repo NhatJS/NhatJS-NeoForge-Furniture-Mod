@@ -123,7 +123,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> PC_RGB1_OFF = registerBlock("pc_rgb1_off",
             (properties) -> new DesktopAltBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> PC_TOWER_GLASS = registerBlock("pc_tower_glass",
-            (properties) -> new DesktopTowerGlassBlock(properties.mapColor(MapColor.STONE).sound(SoundType.GLASS).strength(0.4f).noOcclusion().noCollission()));
+            (properties) -> new DesktopTowerGlassBlock(properties.mapColor(MapColor.STONE).sound(SoundType.GLASS).strength(0.4f).noOcclusion().noCollision()));
     public static final DeferredBlock<Block> LAPTOP = registerBlock("laptop",
             (properties) -> new LaptopBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> PORTABLE_LAPTOP_STAND = registerBlock("portable_laptop_stand",
