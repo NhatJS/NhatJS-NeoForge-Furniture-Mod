@@ -24,10 +24,10 @@ public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEn
     private final BakedModel blades_white;
 
     public CeilingFanRenderer(BlockEntityRendererProvider.Context ctx) {
-        blades_black = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades")));
-        blades_white = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades_b")));
+        blades_black = Minecraft.getInstance().getModelManager().getStandaloneModel(
+                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades"));
+        blades_white = Minecraft.getInstance().getModelManager().getStandaloneModel(
+                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades_b"));
     }
 
     @Override
