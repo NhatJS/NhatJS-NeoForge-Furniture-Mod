@@ -10,6 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
 import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
 
@@ -33,17 +35,16 @@ public class CoffeeTableBlockEntity extends BlockEntity {
         }
     }
 
-    @Override protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider register) {
-        super.saveAdditional(nbt, register);
-        if (!stack.isEmpty()) nbt.put("it", stack.save(register));
-        nbt.putInt("rn", renderNonce);
+    @Override protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        if (!stack.isEmpty()) output.store("it", ItemStack.CODEC, stack);
+        output.putInt("rn", renderNonce);
     }
-    @Override protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider register) {
-        super.loadAdditional(nbt, register);
-        stack = nbt.contains("it")
-                ? ItemStack.parse(register, nbt.getCompoundOrEmpty("it")).orElse(ItemStack.EMPTY)
-                : ItemStack.EMPTY;
-        renderNonce = nbt.getInt("rn").get();
+
+    @Override protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        stack = input.read("it", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        renderNonce = input.getIntOr("rn", 0);
     }
 
     @Override public Packet<ClientGamePacketListener> getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }

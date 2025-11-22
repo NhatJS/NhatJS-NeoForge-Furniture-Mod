@@ -2,7 +2,7 @@ package net.nhatjs.js_furniture_mod;
 
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.client.model.standalone.StandaloneModelBaker;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
@@ -55,8 +55,8 @@ public class NhatJSFurnitureMod {
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener((ModelEvent.RegisterStandalone e) -> {
-            e.register(NhatJSFurnitureModClient.CEILING_FAN_BLADES_ID, StandaloneModelBaker.blockStateModel());
-            e.register(NhatJSFurnitureModClient.CEILING_FAN_BLADES_B_ID, StandaloneModelBaker.blockStateModel());
+            e.register(NhatJSFurnitureModClient.CEILING_FAN_BLADES_ID,  SimpleUnbakedStandaloneModel.blockStateModel(NhatJSFurnitureModClient.CEILING_FAN_BLADES));
+            e.register(NhatJSFurnitureModClient.CEILING_FAN_BLADES_B_ID, SimpleUnbakedStandaloneModel.blockStateModel(NhatJSFurnitureModClient.CEILING_FAN_BLADES_B));
         });
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
