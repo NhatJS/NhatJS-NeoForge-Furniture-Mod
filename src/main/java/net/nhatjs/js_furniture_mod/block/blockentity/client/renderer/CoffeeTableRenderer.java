@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
@@ -25,7 +26,7 @@ public class CoffeeTableRenderer implements BlockEntityRenderer<CoffeeTableBlock
 
     @Override
     public void render(CoffeeTableBlockEntity be, float tickDelta, PoseStack ps,
-                       MultiBufferSource buf, int light, int overlay) {
+                       MultiBufferSource buf, int light, int overlay, Vec3 vec3) {
         if (be.isRemoved() || be.getLevel() == null) return;
 
         BlockState st = be.getBlockState();

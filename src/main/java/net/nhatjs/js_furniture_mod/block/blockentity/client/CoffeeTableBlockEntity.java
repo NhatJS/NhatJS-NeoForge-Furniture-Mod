@@ -41,9 +41,9 @@ public class CoffeeTableBlockEntity extends BlockEntity {
     @Override protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider register) {
         super.loadAdditional(nbt, register);
         stack = nbt.contains("it")
-                ? ItemStack.parse(register, nbt.getCompound("it")).orElse(ItemStack.EMPTY)
+                ? ItemStack.parse(register, nbt.getCompoundOrEmpty("it")).orElse(ItemStack.EMPTY)
                 : ItemStack.EMPTY;
-        renderNonce = nbt.getInt("rn");
+        renderNonce = nbt.getInt("rn").get();
     }
 
     @Override public Packet<ClientGamePacketListener> getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }

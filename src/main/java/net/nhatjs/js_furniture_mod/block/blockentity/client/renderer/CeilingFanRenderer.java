@@ -6,33 +6,30 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.nhatjs.js_furniture_mod.NhatJSFurnitureModClient;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.CeilingFanBlockEntity;
 
-import static net.nhatjs.js_furniture_mod.NhatJSFurnitureMod.MOD_ID;
-
 public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEntity> {
-    private final BakedModel blades_black;
-    private final BakedModel blades_white;
+    private final BlockStateModel blades_black;
+    private final BlockStateModel blades_white;
 
     public CeilingFanRenderer(BlockEntityRendererProvider.Context ctx) {
         blades_black = Minecraft.getInstance().getModelManager().getStandaloneModel(
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades"));
+                NhatJSFurnitureModClient.CEILING_FAN_BLADES_ID);
         blades_white = Minecraft.getInstance().getModelManager().getStandaloneModel(
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades_b"));
+                NhatJSFurnitureModClient.CEILING_FAN_BLADES_B_ID);
     }
 
     @Override
     public void render(CeilingFanBlockEntity be, float tickDelta,
-                       PoseStack ps, MultiBufferSource buf, int light, int overlay) {
+                       PoseStack ps, MultiBufferSource buf, int light, int overlay, Vec3 vec3) {
         Level level = be.getLevel();
         if (level == null) return;
 
@@ -40,11 +37,11 @@ public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEn
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();
-        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(be.getBlockState(), ps, buf, light, overlay);
+        //Minecraft.getInstance().getBlockRenderer().renderSingleBlock(be.getBlockState(), ps, buf, light, overlay);
 
         if (blades_black == null || blades_white == null ||
-                blades_white == Minecraft.getInstance().getModelManager().getMissingModel() ||
-                blades_white == Minecraft.getInstance().getModelManager().getMissingModel()) {
+                blades_black == Minecraft.getInstance().getModelManager().getMissingBlockStateModel() ||
+                blades_white == Minecraft.getInstance().getModelManager().getMissingBlockStateModel()) {
             return;
         }
 
@@ -59,12 +56,12 @@ public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEn
         VertexConsumer vc = buf.getBuffer(RenderType.cutoutMipped());
         if ((level.getBlockState(BlockPos.containing(x, y, z))).getBlock() == ModBlocks.CEILING_FAN.get()) {
             Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(
-                    ps.last(), vc, null, blades_black, 1,1,1, light, overlay);
+                    ps.last(), vc, blades_black, 1,1,1, light, overlay);
 
         }
         else if ((level.getBlockState(BlockPos.containing(x, y, z))).getBlock() == ModBlocks.CEILING_FAN_B.get()) {
             Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(
-                    ps.last(), vc, null, blades_white, 1,1,1, light, overlay);
+                    ps.last(), vc, blades_white, 1,1,1, light, overlay);
         }
         ps.popPose();
     }
