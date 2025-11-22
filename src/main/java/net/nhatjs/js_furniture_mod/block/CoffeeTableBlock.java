@@ -70,8 +70,6 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
-
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, HAS_ITEM);
@@ -109,7 +107,7 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos,
-                         BlockState newState, boolean moved) {
+                                BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CoffeeTableBlockEntity ct) {
