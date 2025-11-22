@@ -1,9 +1,11 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -25,9 +27,30 @@ import org.jetbrains.annotations.Nullable;
 public class CeilingFanBlock extends Block implements EntityBlock {
     public static final BooleanProperty TURN_ON = BooleanProperty.create("turn_on");
 
-    public CeilingFanBlock(Properties settings) {
+    private static final MapCodec<CeilingFanBlock> CODEC = RecordCodecBuilder.mapCodec(builder -> {
+        return builder.group(DyeColor.CODEC.fieldOf("color").forGetter(block -> {
+            return block.color;
+        }), propertiesCodec()).apply(builder, CeilingFanBlock::new);
+    });
+
+    private final DyeColor color;
+
+    public CeilingFanBlock(DyeColor color, Properties settings)
+    {
         super(settings);
+        this.color = color;
         registerDefaultState(getStateDefinition().any().setValue(TURN_ON, false));
+    }
+
+    public DyeColor getColor()
+    {
+        return this.color;
+    }
+
+
+    @Override
+    public MapCodec<CeilingFanBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -35,10 +58,6 @@ public class CeilingFanBlock extends Block implements EntityBlock {
         return Block.box(0, 11, 0, 16, 16, 16);
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
-    }
 
     @Override
     @Nullable
