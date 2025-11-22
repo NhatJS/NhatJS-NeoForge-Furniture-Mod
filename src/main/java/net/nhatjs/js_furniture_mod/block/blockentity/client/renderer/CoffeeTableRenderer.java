@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
+import net.nhatjs.js_furniture_mod.block.ModBlocks;
 import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
 
 import java.util.HashMap;
@@ -52,7 +53,16 @@ public class CoffeeTableRenderer implements BlockEntityRenderer<CoffeeTableBlock
             ps.mulPose(Axis.YP.rotationDegrees(rotation));
         }
         ps.mulPose(Axis.XP.rotationDegrees(90));
-        ps.scale(0.5f, 0.5f, 0.5f);
+        if (stack.is(ModBlocks.LAPTOP.asItem()) || stack.is(ModBlocks.LAPTOP_CLOSED_PORTABLE_LAPTOP_STAND.asItem())
+                || stack.is(ModBlocks.PLANT_POT.asItem()) || stack.is(ModBlocks.PORTABLE_LAPTOP_STAND.asItem())
+                || stack.is(ModBlocks.MIDI_STANDALONE_GROOVEBOX.asItem()) || stack.is(ModBlocks.MIDI_STANDALONE_GROOVEBOX_2.asItem())
+                || stack.is(ModBlocks.MIDI_STANDALONE_GROOVEBOX_3.asItem()) || stack.is(ModBlocks.MIDI_KEYBOARD_CONTROLLER.asItem())) {
+            ps.scale(1.0f, 1.0f, 1.0f);
+        }
+        else {
+            ps.scale(0.5f, 0.5f, 0.5f);
+        }
+
 
         Minecraft.getInstance().getItemRenderer()
                 .renderStatic(stack, ItemDisplayContext.FIXED, light, overlay, ps, buf, be.getLevel(), 0);

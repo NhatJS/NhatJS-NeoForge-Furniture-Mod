@@ -32,6 +32,7 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
 
     public CoffeeTableBlock(Properties settings) {
         super(settings);
+        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(HAS_ITEM, false));
     }
 
     private static final VoxelShape HORIZONTAL = Shapes.or(
@@ -106,7 +107,7 @@ public class CoffeeTableBlock extends Block implements EntityBlock {
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos,
-                         BlockState newState, boolean moved) {
+                                BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof CoffeeTableBlockEntity ct) {
