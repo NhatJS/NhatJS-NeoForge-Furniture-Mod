@@ -1,4 +1,4 @@
-package net.nhatjs.js_furniture_mod.block.blockentity.client.renderer;
+package net.nhatjs.js_furniture_mod.blockentity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.nhatjs.js_furniture_mod.NhatJSFurnitureModClient;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.CeilingFanBlockEntity;
+import net.nhatjs.js_furniture_mod.blockentity.client.CeilingFanBlockEntity;
 
 public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEntity> {
     private final BlockStateModel blades_black;

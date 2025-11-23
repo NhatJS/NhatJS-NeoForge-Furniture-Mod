@@ -1,4 +1,4 @@
-package net.nhatjs.js_furniture_mod.block.blockentity.client;
+package net.nhatjs.js_furniture_mod.blockentity.client;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
-import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
+import net.nhatjs.js_furniture_mod.blockentity.ModBlockEntities;
 
 public class CoffeeTableBlockEntity extends BlockEntity {
     private ItemStack stack = ItemStack.EMPTY;
