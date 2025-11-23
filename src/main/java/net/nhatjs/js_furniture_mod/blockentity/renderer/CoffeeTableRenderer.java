@@ -1,10 +1,8 @@
-package net.nhatjs.js_furniture_mod.block.blockentity.client.renderer;
+package net.nhatjs.js_furniture_mod.blockentity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -22,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
+import net.nhatjs.js_furniture_mod.blockentity.client.CoffeeTableBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;

@@ -4,7 +4,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
+import net.nhatjs.js_furniture_mod.blockentity.ModBlockEntities;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
 import net.nhatjs.js_furniture_mod.item.ModCreativeModeTabs;
 import net.nhatjs.js_furniture_mod.item.ModItems;

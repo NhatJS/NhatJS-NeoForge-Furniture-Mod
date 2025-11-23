@@ -1,4 +1,4 @@
-package net.nhatjs.js_furniture_mod.block.blockentity.client.renderer;
+package net.nhatjs.js_furniture_mod.blockentity.renderer;
 
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.core.BlockPos;
