@@ -11,11 +11,11 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.block.blockentity.ModBlockEntities;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CeilingFanRenderer;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.renderer.CoffeeTableRenderer;
+import net.nhatjs.js_furniture_mod.blockentity.ModBlockEntities;
+import net.nhatjs.js_furniture_mod.blockentity.renderer.CeilingFanRenderer;
+import net.nhatjs.js_furniture_mod.blockentity.renderer.CoffeeTableRenderer;
 import net.nhatjs.js_furniture_mod.entity.ModEntities;
-import net.nhatjs.js_furniture_mod.entity.client.renderer.SeatRenderer;
+import net.nhatjs.js_furniture_mod.entity.renderer.SeatRenderer;
 
 public final class NhatJSFurnitureModClient {
     public static void init(IEventBus eventBus) {

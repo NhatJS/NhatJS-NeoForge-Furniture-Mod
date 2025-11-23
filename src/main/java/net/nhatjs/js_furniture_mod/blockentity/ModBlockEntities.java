@@ -1,12 +1,12 @@
-package net.nhatjs.js_furniture_mod.block.blockentity;
+package net.nhatjs.js_furniture_mod.blockentity;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.nhatjs.js_furniture_mod.NhatJSFurnitureMod;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.CeilingFanBlockEntity;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
+import net.nhatjs.js_furniture_mod.blockentity.client.CeilingFanBlockEntity;
+import net.nhatjs.js_furniture_mod.blockentity.client.CoffeeTableBlockEntity;
 
 import java.util.function.Supplier;
 
