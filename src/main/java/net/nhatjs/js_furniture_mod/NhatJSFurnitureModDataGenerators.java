@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = NhatJSFurnitureMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NhatJSFurnitureMod.MOD_ID)
 public class NhatJSFurnitureModDataGenerators {
     @SubscribeEvent
     public static void gaterData(GatherDataEvent event) {
