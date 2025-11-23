@@ -1,4 +1,4 @@
-package net.nhatjs.js_furniture_mod.block.blockentity.client.renderer;
+package net.nhatjs.js_furniture_mod.blockentity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.block.blockentity.client.CoffeeTableBlockEntity;
+import net.nhatjs.js_furniture_mod.blockentity.client.CoffeeTableBlockEntity;
 
 import java.util.HashMap;
 import java.util.Map;
