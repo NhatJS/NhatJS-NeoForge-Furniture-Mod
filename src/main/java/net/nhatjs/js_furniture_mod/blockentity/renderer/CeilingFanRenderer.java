@@ -4,12 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.level.Level;
@@ -82,12 +82,12 @@ public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEn
                 alpha = 1.0f - (blur * 0.4f);
             }
             if (state.blockState.getBlock() == ModBlocks.CEILING_FAN.get()) {
-                queue.submitBlockModel(ps, RenderType.cutoutMipped(), blades_black, 1f, 1f, 1f, state.light,
+                queue.submitBlockModel(ps, RenderTypes.cutoutMovingBlock(), blades_black, 1f, 1f, 1f, state.light,
                         state.overlay, 0);
 
             }
             else if (state.blockState.getBlock() == ModBlocks.CEILING_FAN_B.get()) {
-                queue.submitBlockModel(ps, RenderType.cutoutMipped(), blades_white, 1f, 1f, 1f, state.light,
+                queue.submitBlockModel(ps, RenderTypes.cutoutMovingBlock(), blades_white, 1f, 1f, 1f, state.light,
                         state.overlay, 0);
             }
 

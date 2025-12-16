@@ -3,7 +3,7 @@ package net.nhatjs.js_furniture_mod.entity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
@@ -18,7 +18,7 @@ public class ModEntities {
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, NhatJSFurnitureMod.MOD_ID);
 
     public static ResourceKey<EntityType<?>> CHAIR_KEY = ResourceKey.create(Registries.ENTITY_TYPE,
-            ResourceLocation.withDefaultNamespace("chair_entity"));
+            Identifier.withDefaultNamespace("chair_entity"));
 
     public static final Supplier<EntityType<SeatBlockEntity>> CHAIR =
             ENTITY_TYPES.register("chair_entity", () -> EntityType.Builder.of(SeatBlockEntity::new, MobCategory.MISC)
