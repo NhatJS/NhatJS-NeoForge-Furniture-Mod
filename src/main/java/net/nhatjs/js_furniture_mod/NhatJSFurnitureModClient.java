@@ -134,6 +134,21 @@ public final class NhatJSFurnitureModClient {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B.get(), RenderType.cutoutMipped());
             //end
+
+            //1.0.5 update
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.COMPUTER_CASE.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_1.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_2.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_3.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_4.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_5.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_6.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_7.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_8.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_9.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_10.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PC_ADDED_11.get(), RenderType.cutoutMipped());
+            //end
         });
     }
 }

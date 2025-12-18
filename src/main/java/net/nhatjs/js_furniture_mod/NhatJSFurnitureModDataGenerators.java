@@ -10,6 +10,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.nhatjs.js_furniture_mod.datagen.ModBlockLootTableProvider;
+import net.nhatjs.js_furniture_mod.datagen.ModBlockStateProvider;
+import net.nhatjs.js_furniture_mod.datagen.ModItemModelProvider;
 import net.nhatjs.js_furniture_mod.datagen.ModRecipeProvider;
 
 import java.util.Collections;
@@ -29,5 +31,8 @@ public class NhatJSFurnitureModDataGenerators {
                 List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)),
                 lookupProvider));
         generator.addProvider(event.includeServer(), new ModRecipeProvider.Runner(packOutput, lookupProvider));
+
+        generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
     }
 }

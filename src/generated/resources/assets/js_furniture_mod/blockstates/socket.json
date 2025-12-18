@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "js_furniture_mod:block/socket",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "js_furniture_mod:block/socket",
+      "x": 90,
+      "y": 270
+    },
+    "facing=north": {
+      "model": "js_furniture_mod:block/socket",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south": {
+      "model": "js_furniture_mod:block/socket",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "js_furniture_mod:block/socket"
+    },
+    "facing=west": {
+      "model": "js_furniture_mod:block/socket",
+      "x": 90,
+      "y": 90
+    }
+  }
+}
