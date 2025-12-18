@@ -613,20 +613,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_black_carpet", has(carpetBlack))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PC)
-                .pattern("114")
-                .pattern("322")
-                .pattern("111")
-                .define('1', concreteBlack)
-                .define('2', endCrystal)
-                .define('3', redstone)
-                .define('4', buttonStone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_stone_button", has(buttonStone))
-                .save(recipeOutput);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PC_TOWER_GLASS)
                 .pattern("21")
                 .pattern("21")
