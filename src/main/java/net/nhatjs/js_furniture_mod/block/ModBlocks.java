@@ -2,7 +2,6 @@ package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -10,10 +9,10 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.nhatjs.js_furniture_mod.block.added.*;
 import net.nhatjs.js_furniture_mod.item.ModItems;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static net.nhatjs.js_furniture_mod.NhatJSFurnitureMod.MOD_ID;
 
@@ -216,6 +215,33 @@ public class ModBlocks {
             (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_DRAWERS_B = registerBlock("wood_medium_kitchen_drawers_b",
             (properties) ->  new KitchenBottomBlock(properties.mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    //end
+
+    //1.0.5 update - cannot be used for creative tab
+    public static final DeferredBlock<Block> COMPUTER_CASE = registerBlock("computer_case",
+            (properties) ->  new ComputerCaseBlock(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_1 = registerBlock("pc_added_1",
+            (properties) ->  new PCAdded1Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_2 = registerBlock("pc_added_2",
+            (properties) ->  new PCAdded2Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_3 = registerBlock("pc_added_3",
+            (properties) ->  new PCAdded3Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_4 = registerBlock("pc_added_4",
+            (properties) ->  new PCAdded4Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_5 = registerBlock("pc_added_5",
+            (properties) ->  new PCAdded5Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_6 = registerBlock("pc_added_6",
+            (properties) ->  new PCAdded6Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_7 = registerBlock("pc_added_7",
+            (properties) ->  new PCAdded7Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_8 = registerBlock("pc_added_8",
+            (properties) ->  new PCAdded8Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_9 = registerBlock("pc_added_9",
+            (properties) ->  new PCAdded9Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_10 = registerBlock("pc_added_10",
+            (properties) ->  new PCAdded10Block(properties.strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_11 = registerBlock("pc_added_11",
+            (properties) ->  new PCAdded11Block(properties.strength(0.75f).noOcclusion()));
     //end
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> function) {

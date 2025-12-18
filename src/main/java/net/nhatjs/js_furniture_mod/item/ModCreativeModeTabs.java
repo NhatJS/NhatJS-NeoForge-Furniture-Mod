@@ -111,6 +111,14 @@ public class ModCreativeModeTabs {
                                         output.accept(ModBlocks.PLANT_POT.get());
                                         output.accept(ModBlocks.BOOKS.get());
                                         output.accept(ModItems.REMOTE_CONTROL_RGB.get());
+                                        output.accept(ModBlocks.COMPUTER_CASE.get()); //1.0.5 update
+                                        output.accept(ModItems.CPU.get()); //1.0.5 update
+                                        output.accept(ModItems.MAINBOARD.get()); //1.0.5 update
+                                        output.accept(ModItems.RAM.get()); //1.0.5 update
+                                        output.accept(ModItems.AIO_COOLER.get()); //1.0.5 update
+                                        output.accept(ModItems.COMPUTER_FAN.get()); //1.0.5 update
+                                        output.accept(ModItems.GPU.get()); //1.0.5 update
+                                        output.accept(ModItems.PSU.get()); //1.0.5 update
                                     }).build());
 
     public static void register(IEventBus eventBus) {
