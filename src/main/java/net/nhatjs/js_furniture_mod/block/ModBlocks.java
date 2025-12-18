@@ -10,6 +10,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.nhatjs.js_furniture_mod.block.added.*;
 import net.nhatjs.js_furniture_mod.item.ModItems;
 
 import java.util.function.Supplier;
@@ -215,6 +216,33 @@ public class ModBlocks {
             () -> new KitchenBottomBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
     public static final DeferredBlock<Block> WOOD_MEDIUM_KITCHEN_DRAWERS_B = registerBlock("wood_medium_kitchen_drawers_b",
             () ->  new KitchenBottomBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0f).noOcclusion()));
+    //end
+
+    //1.0.5 update - cannot be used for creative tab
+    public static final DeferredBlock<Block> COMPUTER_CASE = registerBlock("computer_case",
+            () -> new ComputerCaseBlock(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_1 = registerBlock("pc_added_1",
+            () -> new PCAdded1Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_2 = registerBlock("pc_added_2",
+            () -> new PCAdded2Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_3 = registerBlock("pc_added_3",
+            () -> new PCAdded3Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_4 = registerBlock("pc_added_4",
+            () -> new PCAdded4Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_5 = registerBlock("pc_added_5",
+            () -> new PCAdded5Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_6 = registerBlock("pc_added_6",
+            () -> new PCAdded6Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_7 = registerBlock("pc_added_7",
+            () -> new PCAdded7Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_8 = registerBlock("pc_added_8",
+            () -> new PCAdded8Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_9 = registerBlock("pc_added_9",
+            () -> new PCAdded9Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_10 = registerBlock("pc_added_10",
+            () -> new PCAdded10Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
+    public static final DeferredBlock<Block> PC_ADDED_11 = registerBlock("pc_added_11",
+            () -> new PCAdded11Block(BlockBehaviour.Properties.of().strength(0.75f).noOcclusion()));
     //end
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
