@@ -120,6 +120,21 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP.get());
         dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B.get());
         //end
+
+        //1.0.5 update
+        dropSelf(ModBlocks.COMPUTER_CASE.get());
+        dropSelf(ModBlocks.PC_ADDED_1.get());
+        dropSelf(ModBlocks.PC_ADDED_2.get());
+        dropSelf(ModBlocks.PC_ADDED_3.get());
+        dropSelf(ModBlocks.PC_ADDED_4.get());
+        dropSelf(ModBlocks.PC_ADDED_5.get());
+        dropSelf(ModBlocks.PC_ADDED_6.get());
+        dropSelf(ModBlocks.PC_ADDED_7.get());
+        dropSelf(ModBlocks.PC_ADDED_8.get());
+        dropSelf(ModBlocks.PC_ADDED_9.get());
+        dropSelf(ModBlocks.PC_ADDED_10.get());
+        dropSelf(ModBlocks.PC_ADDED_11.get());
+        //end
     }
 
     @Override
