@@ -10,7 +10,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.item.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -58,10 +60,12 @@ public class ModRecipeProvider extends RecipeProvider {
         //concrete
         Block concreteBlack = Blocks.BLACK_CONCRETE;
         Block concreteGray = Blocks.GRAY_CONCRETE;
+        Block concreteLightGray = Blocks.LIGHT_GRAY_CONCRETE;
         Block concreteWhite = Blocks.WHITE_CONCRETE;
 
         //dye
         Item dyeBlack = Items.BLACK_DYE;
+        Item dyeGreen = Items.GREEN_DYE;
         Item dyeWhite = Items.WHITE_DYE;
 
         //misc
@@ -75,6 +79,7 @@ public class ModRecipeProvider extends RecipeProvider {
         Item redstone = Items.REDSTONE;
         Item lever = Items.LEVER;
         Block redstoneLamp = Blocks.REDSTONE_LAMP;
+        Item redstoneComparator = Items.COMPARATOR;
 
         //furniture mod
         DeferredBlock<Block> laptop = ModBlocks.LAPTOP;
@@ -83,6 +88,7 @@ public class ModRecipeProvider extends RecipeProvider {
         DeferredBlock<Block> monitor = ModBlocks.MONITOR;
         DeferredBlock<Block> keyboard = ModBlocks.KEYBOARD;
         DeferredBlock<Block> computerMouse = ModBlocks.COMPUTER_MOUSE;
+        DeferredItem<Item> computerFan = ModItems.COMPUTER_FAN;
 
         //others
         Item book = Items.BOOK;
@@ -91,6 +97,19 @@ public class ModRecipeProvider extends RecipeProvider {
         Block chest = Blocks.CHEST;
         Item bucket = Items.BUCKET;
         Block flowerPot = Blocks.FLOWER_POT;
+        Item clock = Items.CLOCK;
+
+        shaped(RecipeCategory.DECORATIONS, ModItems.AIO_COOLER)
+                .pattern("111")
+                .pattern("222")
+                .pattern("3  ")
+                .define('1', concreteBlack)
+                .define('2', computerFan)
+                .define('3', redstone)
+                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy("has_computer_fan", has(computerFan))
+                .unlockedBy("has_redstone", has(redstone))
+                .save(output);
 
         shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_GAMING_CHAIR)
                 .pattern("1  ")
@@ -185,6 +204,26 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_redstone", has(redstone))
                 .save(output);
 
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.COMPUTER_CASE)
+                .pattern("212")
+                .pattern("112")
+                .pattern("112")
+                .define('1', concreteBlack)
+                .define('2', computerFan)
+                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy("has_computer_fan", has(computerFan))
+                .save(output);
+
+        shaped(RecipeCategory.DECORATIONS, ModItems.COMPUTER_FAN, 3)
+                .pattern("121")
+                .pattern("212")
+                .pattern("121")
+                .define('1', concreteBlack)
+                .define('2', concreteWhite)
+                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .save(output);
+
         shaped(RecipeCategory.DECORATIONS, ModBlocks.COMPUTER_MOUSE)
                 .pattern("2")
                 .pattern("1")
@@ -200,6 +239,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('2', redstone)
                 .unlockedBy("has_black_concrete", has(concreteBlack))
                 .unlockedBy("has_redstone", has(redstone))
+                .save(output);
+
+        shaped(RecipeCategory.DECORATIONS, ModItems.CPU)
+                .pattern(" 2 ")
+                .pattern("212")
+                .pattern(" 2 ")
+                .define('1', endCrystal)
+                .define('2', dyeGreen)
+                .unlockedBy("has_end_crystal", has(endCrystal))
+                .unlockedBy("has_green_dye", has(dyeGreen))
                 .save(output);
 
         shaped(RecipeCategory.DECORATIONS, ModBlocks.FLOOR_STANDING_SPEAKER)
@@ -238,6 +287,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_iron_block", has(ironBlock))
                 .unlockedBy("has_end_crystal", has(endCrystal))
                 .unlockedBy("has_white_concrete", has(concreteWhite))
+                .save(output);
+
+        shaped(RecipeCategory.DECORATIONS, ModItems.GPU)
+                .pattern("111")
+                .pattern("333")
+                .pattern("121")
+                .define('1', concreteLightGray)
+                .define('2', endCrystal)
+                .define('3', computerFan)
+                .unlockedBy("has_light_gray_concrete", has(concreteLightGray))
+                .unlockedBy("has_end_crystal", has(endCrystal))
+                .unlockedBy("has_computer_fan", has(computerFan))
                 .save(output);
 
         shaped(RecipeCategory.DECORATIONS, ModBlocks.KEYBOARD)
@@ -381,6 +442,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_white_concrete", has(concreteWhite))
                 .save(output);
 
+        shaped(RecipeCategory.DECORATIONS, ModItems.MAINBOARD)
+                .pattern("111")
+                .pattern("121")
+                .pattern("111")
+                .define('1', concreteGray)
+                .define('2', endCrystal)
+                .unlockedBy("has_gray_concrete", has(concreteGray))
+                .unlockedBy("has_end_crystal", has(endCrystal))
+                .save(output);
+
         shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP)
                 .pattern("111")
                 .pattern("523")
@@ -513,6 +584,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_white_wool", has(woolWhite))
                 .save(output);
 
+        shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_CLOCK)
+                .pattern(" 1 ")
+                .pattern("121")
+                .pattern(" 1 ")
+                .define('1', concreteBlack)
+                .define('2', clock)
+                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy("has_clock", has(clock))
+                .save(output);
+
         shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_LIGHT, 4)
                 .pattern("121")
                 .define('1', concreteBlack)
@@ -546,20 +627,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_black_carpet", has(carpetBlack))
                 .save(output);
 
-        shaped(RecipeCategory.DECORATIONS, ModBlocks.PC)
-                .pattern("114")
-                .pattern("322")
-                .pattern("111")
-                .define('1', concreteBlack)
-                .define('2', endCrystal)
-                .define('3', redstone)
-                .define('4', buttonStone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_stone_button", has(buttonStone))
-                .save(output);
-
         shaped(RecipeCategory.DECORATIONS, ModBlocks.PC_TOWER_GLASS)
                 .pattern("21")
                 .pattern("21")
@@ -586,6 +653,28 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("1 1")
                 .define('1', ironIngot)
                 .unlockedBy("has_iron_ingot", has(ironIngot))
+                .save(output);
+
+        shaped(RecipeCategory.DECORATIONS, ModItems.PSU)
+                .pattern("111")
+                .pattern("321")
+                .define('1', concreteBlack)
+                .define('2', endCrystal)
+                .define('3', redstoneComparator)
+                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy("has_end_crystal", has(endCrystal))
+                .unlockedBy("has_redstone_comparator", has(redstoneComparator))
+                .save(output);
+
+        shaped(RecipeCategory.DECORATIONS, ModItems.RAM, 2)
+                .pattern("211")
+                .pattern("333")
+                .define('1', concreteBlack)
+                .define('2', ironIngot)
+                .define('3', redstone)
+                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy("has_iron_ingot", has(ironIngot))
+                .unlockedBy("has_redstone", has(redstone))
                 .save(output);
 
         shaped(RecipeCategory.DECORATIONS, ModBlocks.SHOWER)

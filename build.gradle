@@ -30,6 +30,7 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven { url "https://maven.shedaniel.me" }
 }
 
 base {
@@ -139,7 +140,11 @@ dependencies {
 
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:20.0.811"
+    localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:20.0.811"
 
+    implementation "dev.architectury:architectury-neoforge:17.0.6"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:19.0.147"
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
 
