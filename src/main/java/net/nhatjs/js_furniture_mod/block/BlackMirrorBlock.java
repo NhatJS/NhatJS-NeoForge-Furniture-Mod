@@ -1,20 +1,24 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
+import net.nhatjs.js_furniture_mod.blockentity.MirrorBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class BlackMirrorBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class BlackMirrorBlock extends FurnitureHorizontalBlock implements EntityBlock {
     public BlackMirrorBlock(Properties settings) {
         super(settings);
     }
@@ -22,20 +26,33 @@ public class BlackMirrorBlock extends Block {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> Block.box(2.5, -11.5, 15.25, 13.5, 27.5, 16);
-            case SOUTH -> Block.box(2.5, -11.5, 0, 13.5, 27.5, 0.75);
-            case EAST -> Block.box(0, -11.5, 2.5, 0.75, 27.5, 13.5);
-            case WEST -> Block.box(15.25, -11.5, 2.5, 16, 27.5, 13.5);
+            default -> box(2.5, -12, 15.2, 13.5, 28, 16);
+            case SOUTH -> box(2.5, -12, 0, 13.5, 28, 0.8);
+            case EAST -> box(0, -12, 2.5, 0.8, 28, 13.5);
+            case WEST -> box(15.2, -12, 2.5, 16, 28, 13.5);
         };
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new MirrorBlockEntity(pos, state);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        BlockEntity entity = world.getBlockEntity(pos);
+        if (!(entity instanceof MirrorBlockEntity mirror)) return InteractionResult.PASS;
+        mirror.setStand(!mirror.makeStand());
+        return InteractionResult.SUCCESS;
     }
 }

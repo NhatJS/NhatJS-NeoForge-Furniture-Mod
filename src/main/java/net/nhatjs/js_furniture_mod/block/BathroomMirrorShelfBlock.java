@@ -1,21 +1,16 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
 
-public class BathroomMirrorShelfBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class BathroomMirrorShelfBlock extends FurnitureHorizontalBlock {
     public BathroomMirrorShelfBlock(Properties settings) {
         super(settings);
     }
@@ -28,11 +23,6 @@ public class BathroomMirrorShelfBlock extends Block {
             case EAST -> Shapes.or(box(0, 4.65, 3, 2, 5.5, 13), box(0, 7, 3.25, 0.3, 19, 12.75));
             case WEST -> Shapes.or(box(14, 4.65, 3, 16, 5.5, 13), box(15.7, 7, 3.25, 16, 19, 12.75));
         };
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override

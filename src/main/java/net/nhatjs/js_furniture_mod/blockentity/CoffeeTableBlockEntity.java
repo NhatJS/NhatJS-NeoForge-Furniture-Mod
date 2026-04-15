@@ -1,0 +1,51 @@
+package net.nhatjs.js_furniture_mod.blockentity;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
+import net.nhatjs.js_furniture_mod.core.ModBlockEntities;
+
+public class CoffeeTableBlockEntity extends BlockEntity {
+    private ItemStack stack = ItemStack.EMPTY;
+    private int renderNonce = 0;
+
+    public CoffeeTableBlockEntity(BlockPos pos, BlockState s) { super(ModBlockEntities.COFFEE_TABLE.get(), pos, s); }
+
+    public ItemStack getItem() { return stack; }
+    public int getRenderNonce() { return renderNonce; }
+
+    public void setItem(ItemStack s) {
+        this.stack = (s == null ? ItemStack.EMPTY : s);
+        this.renderNonce++;
+        setChanged();
+
+        if (level != null && !level.isClientSide()) {
+            level.setBlock(getBlockPos(), getBlockState().setValue(CoffeeTableBlock.HAS_ITEM, !stack.isEmpty()), 3);
+            ((ServerLevel)level).getChunkSource().blockChanged(getBlockPos());
+        }
+    }
+
+    @Override protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider register) {
+        super.saveAdditional(nbt, register);
+        if (!stack.isEmpty()) nbt.put("it", stack.save(register));
+        nbt.putInt("rn", renderNonce);
+    }
+    @Override protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider register) {
+        super.loadAdditional(nbt, register);
+        stack = nbt.contains("it")
+                ? ItemStack.parse(register, nbt.getCompound("it")).orElse(ItemStack.EMPTY)
+                : ItemStack.EMPTY;
+        renderNonce = nbt.getInt("rn");
+    }
+
+    @Override public Packet<ClientGamePacketListener> getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
+    @Override public CompoundTag getUpdateTag(HolderLookup.Provider register) { return saveWithoutMetadata(register); }
+}

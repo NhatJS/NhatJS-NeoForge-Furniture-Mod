@@ -1,20 +1,15 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
 
-public class KeyboardBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class KeyboardBlock extends FurnitureHorizontalBlock {
     public KeyboardBlock(Properties settings) {
         super(settings);
     }
@@ -22,16 +17,11 @@ public class KeyboardBlock extends Block {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> Block.box(3.5, 0, 6, 12.5, 0.3, 10);
-            case SOUTH -> Block.box(3.5, 0, 6, 12.5, 0.3, 10);
-            case EAST -> Block.box(6, 0, 3.5, 10, 0.3, 12.5);
-            case WEST -> Block.box(6, 0, 3.5, 10, 0.3, 12.5);
+            default -> box(3.0375, 0, 6.175, 12.9625, 0.275, 9.825);
+            case SOUTH -> box(3.0375, 0, 6.175, 12.9625, 0.275, 9.825);
+            case EAST -> box(6.175, 0, 3.0375, 9.825, 0.275, 12.9625);
+            case WEST -> box(6.175, 0, 3.0375, 9.825, 0.275, 12.9625);
         };
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override

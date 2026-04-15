@@ -2,22 +2,28 @@ package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
 
-public class ToiletBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class ToiletBlock extends FurnitureHorizontalBlock {
+    public static final BooleanProperty OPEN = BooleanProperty.create("open");
 
     public ToiletBlock(Properties settings) {
         super(settings);
+        this.registerDefaultState(this.getStateDefinition().any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(OPEN, false));
     }
 
     private static final VoxelShape NORTH = Shapes.or(
@@ -59,12 +65,16 @@ public class ToiletBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, OPEN);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!world.isClientSide()) {
+            boolean current = state.getValue(OPEN);
+            world.setBlock(pos, state.setValue(OPEN, !current), 3, Block.UPDATE_ALL);
+        }
+        return InteractionResult.SUCCESS;
     }
 }

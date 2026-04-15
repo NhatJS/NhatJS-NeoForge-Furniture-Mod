@@ -6,27 +6,45 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.blockentity.client.CeilingFanBlockEntity;
+import net.minecraft.world.level.block.Block;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
+import net.nhatjs.js_furniture_mod.blockentity.CeilingFanBlockEntity;
 
-import static net.nhatjs.js_furniture_mod.NhatJSFurnitureMod.MOD_ID;
+import static net.nhatjs.js_furniture_mod.NhatJSFurnitureModClient.*;
 
 public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEntity> {
+    private final Minecraft mc = Minecraft.getInstance();
+    ModelBlockRenderer bmr = mc.getBlockRenderer().getModelRenderer();
     private final BakedModel blades_black;
     private final BakedModel blades_white;
 
+    private final BakedModel woodLightBladesBlack;
+    private final BakedModel woodMediumBladesBlack;
+    private final BakedModel blackBladesBlack;
+    private final BakedModel whiteBladesBlack;
+    private final BakedModel woodLightBladesWhite;
+    private final BakedModel woodMediumBladesWhite;
+    private final BakedModel blackBladesWhite;
+    private final BakedModel whiteBladesWhite;
+
     public CeilingFanRenderer(BlockEntityRendererProvider.Context ctx) {
-        blades_black = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades")));
-        blades_white = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(MOD_ID, "block/ceiling_fan_blades_b")));
+        blades_black = mc.getModelManager().getModel(CEILING_FAN_BLADES);
+        blades_white = mc.getModelManager().getModel(CEILING_FAN_BLADES_B);
+
+        woodLightBladesBlack = mc.getModelManager().getModel(WOOD_LIGHT_CEILING_FAN_BLADES_BLACK);
+        woodMediumBladesBlack = mc.getModelManager().getModel(WOOD_MEDIUM_CEILING_FAN_BLADES_BLACK);
+        blackBladesBlack = mc.getModelManager().getModel(BLACK_CEILING_FAN_BLADES_BLACK);
+        whiteBladesBlack = mc.getModelManager().getModel(WHITE_CEILING_FAN_BLADES_BLACK);
+        woodLightBladesWhite = mc.getModelManager().getModel(WOOD_LIGHT_CEILING_FAN_BLADES_WHITE);
+        woodMediumBladesWhite = mc.getModelManager().getModel(WOOD_MEDIUM_CEILING_FAN_BLADES_WHITE);
+        blackBladesWhite = mc.getModelManager().getModel(BLACK_CEILING_FAN_BLADES_WHITE);
+        whiteBladesWhite = mc.getModelManager().getModel(WHITE_CEILING_FAN_BLADES_WHITE);
     }
 
     @Override
@@ -39,31 +57,48 @@ public class CeilingFanRenderer implements BlockEntityRenderer<CeilingFanBlockEn
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();
-        //Minecraft.getInstance().getBlockRenderer().renderSingleBlock(be.getBlockState(), ps, buf, light, overlay);
 
-        if (blades_black == null || blades_white == null ||
-                blades_black == Minecraft.getInstance().getModelManager().getMissingModel() ||
-                blades_white == Minecraft.getInstance().getModelManager().getMissingModel()) {
-            return;
-        }
+        VertexConsumer vc = buf.getBuffer(RenderType.cutoutMipped());
+        Block blockState = (level.getBlockState(BlockPos.containing(x, y, z))).getBlock();
 
         ps.pushPose();
         ps.translate(0.5, 0.9375, 0.5);
         ps.mulPose(Axis.YP.rotationDegrees(be.getAngle(tickDelta)));
-
-        float blur = Math.min(be.speed / 27f, 1f);
-        float alpha = 1.0f - (blur * 0.4f);
         ps.translate(-0.5, -0.9375, -0.5);
 
-        VertexConsumer vc = buf.getBuffer(RenderType.cutoutMipped());
-        if ((level.getBlockState(BlockPos.containing(x, y, z))).getBlock() == ModBlocks.CEILING_FAN.get()) {
-            Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(
-                    ps.last(), vc, null, blades_black, 1,1,1, light, overlay);
-
+        //unused
+        if (blockState == ModBlocks.CEILING_FAN.get()) {
+            bmr.tesselateWithAO(level, blades_black, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
         }
-        else if ((level.getBlockState(BlockPos.containing(x, y, z))).getBlock() == ModBlocks.CEILING_FAN_B.get()) {
-            Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(
-                    ps.last(), vc, null, blades_white, 1,1,1, light, overlay);
+
+        else if (blockState == ModBlocks.CEILING_FAN_B.get()) {
+            bmr.tesselateWithAO(level, blades_white, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        //unused
+
+        if (blockState == ModBlocks.WOOD_LIGHT_CEILING_FAN_BLACK.get()) {
+            bmr.tesselateWithAO(level, woodLightBladesBlack, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.WOOD_MEDIUM_CEILING_FAN_BLACK.get()) {
+            bmr.tesselateWithAO(level, woodMediumBladesBlack, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.BLACK_CEILING_FAN_BLACK.get()) {
+            bmr.tesselateWithAO(level, blackBladesBlack, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.WHITE_CEILING_FAN_BLACK.get()) {
+            bmr.tesselateWithAO(level, whiteBladesBlack, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.WOOD_LIGHT_CEILING_FAN_WHITE.get()) {
+            bmr.tesselateWithAO(level, woodLightBladesWhite, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.WOOD_MEDIUM_CEILING_FAN_WHITE.get()) {
+            bmr.tesselateWithAO(level, woodMediumBladesWhite, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.BLACK_CEILING_FAN_WHITE.get()) {
+            bmr.tesselateWithAO(level, blackBladesWhite, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
+        }
+        else if (blockState == ModBlocks.WHITE_CEILING_FAN_WHITE.get()) {
+            bmr.tesselateWithAO(level, whiteBladesWhite, be.getBlockState(), pos, ps, vc, false, level.random, light, overlay);
         }
         ps.popPose();
     }

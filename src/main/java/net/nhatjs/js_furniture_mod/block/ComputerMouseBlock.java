@@ -1,20 +1,15 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
 
-public class ComputerMouseBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class ComputerMouseBlock extends FurnitureHorizontalBlock {
     public ComputerMouseBlock(Properties settings) {
         super(settings);
     }
@@ -22,15 +17,12 @@ public class ComputerMouseBlock extends Block {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> Block.box(7, 0, 7, 9, 0.3, 9);
+            default -> box(7.35, 0, 6.875, 8.65, 0.725, 9.125);
+            case SOUTH -> box(7.35, 0, 6.875, 8.65, 0.725, 9.125);
+            case EAST -> box(6.875, 0, 7.35, 9.125, 0.725, 8.65);
+            case WEST -> box(6.875, 0, 7.35, 9.125, 0.725, 8.65);
         };
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
-    }
-
+    } 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);

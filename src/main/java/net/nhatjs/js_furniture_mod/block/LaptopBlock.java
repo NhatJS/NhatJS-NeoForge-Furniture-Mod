@@ -8,6 +8,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,14 +20,16 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
+import net.nhatjs.js_furniture_mod.blockentity.LaptopBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class LaptopBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class LaptopBlock extends FurnitureHorizontalBlock implements EntityBlock {
     public static final BooleanProperty TURN_ON = BooleanProperty.create("turn_on");
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
 
     public LaptopBlock(Properties settings) {
-        super(settings.lightLevel(st -> st.getValue(TURN_ON) ? 3 : 0));
+        super(settings);
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(TURN_ON, false)
@@ -48,8 +52,13 @@ public class LaptopBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new LaptopBlockEntity(pos, state);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -78,9 +87,11 @@ public class LaptopBlock extends Block {
                 level.setBlock(pos, state.setValue(TURN_ON, false), Block.UPDATE_ALL);
             } else {
                 level.setBlock(pos, state.setValue(TURN_ON, true), Block.UPDATE_ALL);
-                return InteractionResult.CONSUME;
             }
-            return InteractionResult.CONSUME;
+            BlockEntity entity = level.getBlockEntity(pos);
+            if (!(entity instanceof LaptopBlockEntity light)) return InteractionResult.PASS;
+            light.setPowered(!light.isPowered());
+            level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
         }
 
         return InteractionResult.CONSUME;

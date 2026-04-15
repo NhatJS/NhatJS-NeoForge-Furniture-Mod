@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.nhatjs.js_furniture_mod.entity.client.SeatBlockEntity;
+import net.nhatjs.js_furniture_mod.entity.SeatBlockEntity;
 
 public class SeatRenderer extends EntityRenderer<SeatBlockEntity> {
     public SeatRenderer(EntityRendererProvider.Context context) {

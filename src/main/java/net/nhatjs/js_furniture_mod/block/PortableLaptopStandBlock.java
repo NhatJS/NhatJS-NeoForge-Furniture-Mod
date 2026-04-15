@@ -6,22 +6,19 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
 
-public class PortableLaptopStandBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class PortableLaptopStandBlock extends FurnitureHorizontalBlock {
     public PortableLaptopStandBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.getStateDefinition().any()
@@ -44,11 +41,6 @@ public class PortableLaptopStandBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
-    }
-
-    @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                             Player player, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -63,7 +55,6 @@ public class PortableLaptopStandBlock extends Block {
                 ItemStack _stktoremove = (player instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
                 _player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
             }
-
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.SUCCESS;

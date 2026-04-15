@@ -1,20 +1,15 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
 
-public class FloorStandingSpeakerBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class FloorStandingSpeakerBlock extends FurnitureHorizontalBlock {
     public FloorStandingSpeakerBlock(Properties settings) {
         super(settings);
     }
@@ -27,11 +22,6 @@ public class FloorStandingSpeakerBlock extends Block {
             case EAST -> Block.box(2, 0, 5.7, 6.6, 21.75, 10.3);
             case WEST -> Block.box(9.4, 0, 5.7, 14, 21.75, 10.3);
         };
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override

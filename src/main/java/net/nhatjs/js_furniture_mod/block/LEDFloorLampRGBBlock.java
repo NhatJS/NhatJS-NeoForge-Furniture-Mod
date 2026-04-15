@@ -5,28 +5,31 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nhatjs.js_furniture_mod.item.ModItems;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
+import net.nhatjs.js_furniture_mod.blockentity.LampBlockEntity;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
+import net.nhatjs.js_furniture_mod.core.ModItems;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
 
-public class LEDFloorLampRGBBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class LEDFloorLampRGBBlock extends FurnitureHorizontalBlock implements EntityBlock {
     public static final BooleanProperty TURN_ON = BooleanProperty.create("turn_on");
 
     public LEDFloorLampRGBBlock(Properties settings) {
@@ -76,8 +79,13 @@ public class LEDFloorLampRGBBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new LampBlockEntity(pos, state);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -85,21 +93,30 @@ public class LEDFloorLampRGBBlock extends Block {
                                    Player player, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         ItemStack held = player.getMainHandItem();
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (!(entity instanceof LampBlockEntity lampRGB)) return InteractionResult.PASS;
 
         if (!held.is(ModItems.REMOTE_CONTROL_RGB)) {
-            boolean next = !state.getValue(TURN_ON);
-            level.setBlock(pos, state.setValue(TURN_ON, next), Block.UPDATE_ALL);
-            return InteractionResult.SUCCESS;
+            boolean current = state.getValue(TURN_ON);
+            level.setBlock(pos, state.setValue(TURN_ON, !current), Block.UPDATE_ALL);
+            lampRGB.setPowered(!lampRGB.isPowered());
+            level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
         }
 
-        if (held.is(ModItems.REMOTE_CONTROL_RGB) && state.getValue(TURN_ON)) {
+        if (held.is(ModItems.REMOTE_CONTROL_RGB)) {
             Direction facing =  state.getValue(HorizontalDirectionalBlock.FACING);
-            level.setBlock(pos, ModBlocks.LED_FLOOR_LAMP_RGB_OFF_2.get().defaultBlockState()
+            boolean turnOn = state.getValue(TURN_ON);
+            boolean wasPowered = lampRGB.isPowered();
+            lampRGB.setPowered(lampRGB.isPowered());
+            BlockState newState = ModBlocks.LED_FLOOR_LAMP_RGB_OFF_2.get().defaultBlockState()
                     .setValue(HorizontalDirectionalBlock.FACING, facing)
-                    .setValue(LEDFloorLampRGBAltBlock.TURN_ON, true), Block.UPDATE_ALL);
-            return InteractionResult.SUCCESS;
+                    .setValue(LEDFloorLampRGBAltBlock.TURN_ON, turnOn);
+            level.setBlock(pos, newState, Block.UPDATE_ALL);
+            BlockEntity newEntity = level.getBlockEntity(pos);
+            if (newEntity instanceof LampBlockEntity lampRGBAlt) {
+                lampRGBAlt.setPowered(wasPowered);
+            }
         }
-
         return InteractionResult.SUCCESS;
     }
 

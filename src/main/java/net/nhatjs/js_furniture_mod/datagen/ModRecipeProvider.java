@@ -2,19 +2,17 @@ package net.nhatjs.js_furniture_mod.datagen;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
-import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.item.ModItems;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
+import net.nhatjs.js_furniture_mod.core.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -42,6 +40,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //banner
         Block bannerWhite = Blocks.WHITE_BANNER;
+        Block bannerBlack = Blocks.BLACK_BANNER;
 
         //concrete
         Block concreteBlack = Blocks.BLACK_CONCRETE;
@@ -63,7 +62,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //electronic
         Item redstone = Items.REDSTONE;
-        Item lever = Items.LEVER;
         Block redstoneLamp = Blocks.REDSTONE_LAMP;
         Item redstoneComparator = Items.COMPARATOR;
 
@@ -72,9 +70,39 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         DeferredBlock<Block> portableLaptopStand = ModBlocks.PORTABLE_LAPTOP_STAND;
         DeferredBlock<Block> midiGroovebox = ModBlocks.MIDI_STANDALONE_GROOVEBOX;
         DeferredBlock<Block> monitor = ModBlocks.MONITOR;
-        DeferredBlock<Block> keyboard = ModBlocks.KEYBOARD;
-        DeferredBlock<Block> computerMouse = ModBlocks.COMPUTER_MOUSE;
+        DeferredBlock<Block> blackKeyboard = ModBlocks.BLACK_KEYBOARD;
+        DeferredBlock<Block> blackComputerMouse = ModBlocks.BLACK_COMPUTER_MOUSE;
         DeferredItem<Item> computerFan = ModItems.COMPUTER_FAN;
+        DeferredBlock<Block> woodLightDrawerSingle = ModBlocks.WOOD_LIGHT_DRAWER_SINGLE;
+        DeferredBlock<Block> woodLightCompartmentStorageCabinet = ModBlocks.WOOD_LIGHT_COMPARTMENT_STORAGE_CABINET;
+        DeferredBlock<Block> woodLightKitchenCompartmentStorageCabinet = ModBlocks.WOOD_LIGHT_KITCHEN_COMPARTMENT_STORAGE_CABINET;
+        DeferredBlock<Block> woodLightKitchenCompartmentStorageCabinetB = ModBlocks.WOOD_LIGHT_KITCHEN_COMPARTMENT_STORAGE_CABINET_B;
+        DeferredBlock<Block> woodLightKitchenCabinetBottom = ModBlocks.KITCHEN_CABINET_BOTTOM;
+        DeferredBlock<Block> woodLightKitchenCabinetBottomB = ModBlocks.KITCHEN_CABINET_BOTTOM_B;
+        DeferredItem<Item> woodLightSquareStick = ModItems.WOOD_LIGHT_SQUARE_STICK;
+        DeferredItem<Item> woodLightShortSquareStick = ModItems.WOOD_LIGHT_SHORT_SQUARE_STICK;
+        DeferredItem<Item> woodLightPanel = ModItems.WOOD_LIGHT_PANEL;
+        DeferredBlock<Block> woodMediumDrawerSingle = ModBlocks.WOOD_MEDIUM_DRAWER_SINGLE;
+        DeferredBlock<Block> woodMediumCompartmentStorageCabinet = ModBlocks.WOOD_MEDIUM_COMPARTMENT_STORAGE_CABINET;
+        DeferredBlock<Block> woodMediumKitchenCompartmentStorageCabinet = ModBlocks.WOOD_MEDIUM_KITCHEN_COMPARTMENT_STORAGE_CABINET;
+        DeferredBlock<Block> woodMediumKitchenCompartmentStorageCabinetB = ModBlocks.WOOD_MEDIUM_KITCHEN_COMPARTMENT_STORAGE_CABINET_B;
+        DeferredBlock<Block> woodMediumKitchenCabinetBottom = ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM;
+        DeferredBlock<Block> woodMediumKitchenCabinetBottomB = ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B;
+        DeferredItem<Item> woodMediumSquareStick = ModItems.WOOD_MEDIUM_SQUARE_STICK;
+        DeferredItem<Item> woodMediumShortSquareStick = ModItems.WOOD_MEDIUM_SHORT_SQUARE_STICK;
+        DeferredItem<Item> woodMediumPanel = ModItems.WOOD_MEDIUM_PANEL;
+        DeferredBlock<Block> blackDrawerSingle = ModBlocks.BLACK_DRAWER_SINGLE;
+        DeferredBlock<Block> blackCompartmentStorageCabinet = ModBlocks.BLACK_COMPARTMENT_STORAGE_CABINET;
+        DeferredItem<Item> blackSquareStick = ModItems.BLACK_SQUARE_STICK;
+        DeferredItem<Item> blackShortSquareStick = ModItems.BLACK_SHORT_SQUARE_STICK;
+        DeferredItem<Item> blackPanel = ModItems.BLACK_PANEL;
+        DeferredBlock<Block> blackDeskColumn = ModBlocks.BLACK_DESK_COLUMN;
+        DeferredBlock<Block> whiteDrawerSingle = ModBlocks.WHITE_DRAWER_SINGLE;
+        DeferredBlock<Block> whiteCompartmentStorageCabinet = ModBlocks.WHITE_COMPARTMENT_STORAGE_CABINET;
+        DeferredItem<Item> whiteSquareStick = ModItems.WHITE_SQUARE_STICK;
+        DeferredItem<Item> whiteShortSquareStick = ModItems.WHITE_SHORT_SQUARE_STICK;
+        DeferredItem<Item> whitePanel = ModItems.WHITE_PANEL;
+        DeferredBlock<Block> whiteDeskColumn = ModBlocks.WHITE_DESK_COLUMN;
 
         //others
         Item book = Items.BOOK;
@@ -92,9 +120,103 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', computerFan)
                 .define('3', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_computer_fan", has(computerFan))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(computerFan), has(computerFan))
+                .unlockedBy(getHasName(redstone), has(redstone))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_3_DRAWER_DRESSER)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', blackCompartmentStorageCabinet)
+                .define('2', blackDrawerSingle)
+                .unlockedBy(getHasName(blackCompartmentStorageCabinet), has(blackCompartmentStorageCabinet))
+                .unlockedBy(getHasName(blackDrawerSingle), has(blackDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_CEILING_FAN_BLACK)
+                .pattern(" 1 ")
+                .pattern("121")
+                .define('1', blackSquareStick)
+                .define('2', blackShortSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_CEILING_FAN_WHITE)
+                .pattern(" 3 ")
+                .pattern("121")
+                .define('1', blackSquareStick)
+                .define('2', whiteShortSquareStick)
+                .define('3', whiteSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(whiteShortSquareStick), has(whiteShortSquareStick))
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_CHAIR)
+                .pattern("1  ")
+                .pattern("111")
+                .pattern("1 1")
+                .define('1', blackSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_COFFEE_TABLE)
+                .pattern("22")
+                .pattern("11")
+                .define('1', blackShortSquareStick)
+                .define('2', blackPanel)
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(blackPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.BLACK_COMPARTMENT_STORAGE_CABINET)
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_COMPUTER_MOUSE)
+                .pattern("3")
+                .pattern("1")
+                .pattern("2")
+                .define('1', blackShortSquareStick)
+                .define('2', redstone)
+                .define('3', buttonStone)
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .unlockedBy(getHasName(redstone), has(redstone))
+                .unlockedBy(getHasName(buttonStone), has(buttonStone))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_DESK)
+                .pattern("22")
+                .pattern("33")
+                .pattern("11")
+                .define('1', blackSquareStick)
+                .define('2', blackPanel)
+                .define('3', blackDrawerSingle)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .unlockedBy(getHasName(blackDrawerSingle), has(blackDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_DESK_COLUMN)
+                .pattern(" 12")
+                .pattern(" 1 ")
+                .pattern("111")
+                .define('1', blackSquareStick)
+                .define('2', redstone)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(redstone), has(redstone))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_DRAWER_SINGLE, 3)
+                .pattern("121")
+                .define('1', concreteBlack)
+                .define('2', chest)
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(chest), has(chest))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_GAMING_CHAIR)
@@ -104,60 +226,107 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', woolBlack)
                 .define('2', woolWhite)
                 .define('3', concreteBlack)
-                .unlockedBy("has_black_wool", has(woolBlack))
-                .unlockedBy("has_white_wool", has(woolWhite))
-                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy(getHasName(woolBlack), has(woolBlack))
+                .unlockedBy(getHasName(woolWhite), has(woolWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_KEYBOARD)
+                .pattern("222")
+                .pattern("131")
+                .define('1', blackPanel)
+                .define('2', blackShortSquareStick)
+                .define('3', redstone)
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .unlockedBy(getHasName(redstone), has(redstone))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_MIRROR)
-                .pattern("1")
-                .pattern("2")
-                .pattern("1")
-                .define('1', concreteBlack)
+                .pattern("121")
+                .pattern("121")
+                .pattern("121")
+                .define('1', blackSquareStick)
                 .define('2', glassPane)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_glass_pane", has(glassPane))
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(glassPane), has(glassPane))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.BLACK_PANEL)
+                .pattern("11")
+                .pattern("11")
+                .define('1', blackSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_SOFA, 2)
                 .pattern("111")
                 .pattern("111")
                 .define('1', woolBlack)
-                .unlockedBy("has_black_wool", has(woolBlack))
+                .unlockedBy(getHasName(woolBlack), has(woolBlack))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.BLACK_SHORT_SQUARE_STICK, 2)
+                .pattern("1")
+                .define('1', blackSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.BLACK_SQUARE_STICK, 6)
+                .pattern("1")
+                .pattern("1")
+                .pattern("1")
+                .define('1', concreteBlack)
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_STANDING_DESK)
                 .pattern("111")
-                .pattern("223")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', redstone)
-                .define('3', lever)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
+                .pattern("232")
+                .define('1', blackPanel)
+                .define('2', blackDeskColumn)
+                .define('3', blackSquareStick)
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .unlockedBy(getHasName(blackDeskColumn), has(blackDeskColumn))
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_STANDING_DESK_B)
                 .pattern("111")
-                .pattern("223")
-                .pattern("4 4")
-                .define('1', concreteBlack)
-                .define('2', redstone)
-                .define('3', lever)
-                .define('4', concreteWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .pattern("232")
+                .define('1', blackPanel)
+                .define('2', whiteDeskColumn)
+                .define('3', whiteSquareStick)
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .unlockedBy(getHasName(whiteDeskColumn), has(whiteDeskColumn))
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_TABLE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_TABLE)
+                .pattern("222")
+                .pattern("1 1")
+                .define('1', blackSquareStick)
+                .define('2', blackPanel)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_TV_STAND)
+                .pattern(" 11")
                 .pattern("111")
                 .pattern("1 1")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .define('1', blackPanel)
+                .unlockedBy(getHasName(blackPanel), has(blackPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BLACK_VERTICAL_BLINDS)
+                .pattern("111")
+                .pattern("222")
+                .pattern("222")
+                .define('1', blackSquareStick)
+                .define('2', bannerBlack)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(bannerBlack), has(bannerBlack))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.BOOKS, 2)
@@ -167,27 +336,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', book)
                 .define('2', dyeWhite)
                 .define('3', dyeBlack)
-                .unlockedBy("has_book", has(book))
-                .unlockedBy("has_white_dye", has(dyeWhite))
-                .unlockedBy("has_black_dye", has(dyeBlack))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.CEILING_FAN)
-                .pattern(" 2 ")
-                .pattern("111")
-                .define('1', concreteBlack)
-                .define('2', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.CEILING_FAN_B)
-                .pattern(" 2 ")
-                .pattern("111")
-                .define('1', concreteWhite)
-                .define('2', redstone)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(book), has(book))
+                .unlockedBy(getHasName(dyeWhite), has(dyeWhite))
+                .unlockedBy(getHasName(dyeBlack), has(dyeBlack))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.COMPUTER_CASE)
@@ -196,8 +347,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("112")
                 .define('1', concreteBlack)
                 .define('2', computerFan)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_computer_fan", has(computerFan))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(computerFan), has(computerFan))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.COMPUTER_FAN, 3)
@@ -206,25 +357,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("121")
                 .define('1', concreteBlack)
                 .define('2', concreteWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.COMPUTER_MOUSE)
-                .pattern("2")
-                .pattern("1")
-                .define('1', concreteBlack)
-                .define('2', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.COOKTOP)
                 .pattern("121")
                 .define('1', concreteBlack)
                 .define('2', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(redstone), has(redstone))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.CPU)
@@ -233,8 +375,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" 2 ")
                 .define('1', endCrystal)
                 .define('2', dyeGreen)
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_green_dye", has(dyeGreen))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(dyeGreen), has(dyeGreen))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.FLOOR_STANDING_SPEAKER)
@@ -243,8 +385,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("1")
                 .define('1', concreteBlack)
                 .define('2', noteBlock)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_note_block", has(noteBlock))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(noteBlock), has(noteBlock))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.FRIDGE_A)
@@ -255,10 +397,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', ironBlock)
                 .define('3', endCrystal)
                 .define('4', concreteGray)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_iron_block", has(ironBlock))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_gray_concrete", has(concreteGray))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(ironBlock), has(ironBlock))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(concreteGray), has(concreteGray))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.FRIDGE_B)
@@ -269,10 +411,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', ironBlock)
                 .define('3', endCrystal)
                 .define('4', concreteWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_iron_block", has(ironBlock))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(ironBlock), has(ironBlock))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.GPU)
@@ -282,150 +424,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteLightGray)
                 .define('2', endCrystal)
                 .define('3', computerFan)
-                .unlockedBy("has_light_gray_concrete", has(concreteLightGray))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_computer_fan", has(computerFan))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KEYBOARD)
-                .pattern("121")
-                .pattern("111")
-                .define('1', concreteBlack)
-                .define('2', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM, 2)
-                .pattern("333")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', slabBirch)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_birch_slab", has(slabBirch))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_2, 2)
-                .pattern("131")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', ironIngot)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_2_EXTRA, 2)
-                .pattern("111")
-                .pattern("131")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', ironIngot)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B, 2)
-                .pattern("333")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', concreteWhite)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B_2, 2)
-                .pattern("111")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_B_WITH_SINK, 2)
-                .pattern("343")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', concreteWhite)
-                .define('4', bucket)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_BOTTOM_WITH_SINK, 2)
-                .pattern("343")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', slabBirch)
-                .define('4', bucket)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_birch_slab", has(slabBirch))
-                .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_TOP, 2)
-                .pattern("11")
-                .pattern("23")
-                .pattern("11")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', ironIngot)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_CABINET_TOP_B, 2)
-                .pattern("11")
-                .pattern("21")
-                .pattern("11")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_DRAWERS, 2)
-                .pattern("323")
-                .pattern("121")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', slabBirch)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_birch_slab", has(slabBirch))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.KITCHEN_DRAWERS_B, 2)
-                .pattern("323")
-                .pattern("121")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .define('3', concreteWhite)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .unlockedBy(getHasName(concreteLightGray), has(concreteLightGray))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(computerFan), has(computerFan))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.MAINBOARD)
@@ -434,8 +435,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .define('1', concreteGray)
                 .define('2', endCrystal)
-                .unlockedBy("has_gray_concrete", has(concreteGray))
-                .unlockedBy("has_end_crystal", has(endCrystal))
+                .unlockedBy(getHasName(concreteGray), has(concreteGray))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP)
@@ -447,11 +448,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('3', buttonStone)
                 .define('4', redstone)
                 .define('5', noteBlock)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_stone_button", has(buttonStone))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_note_block", has(noteBlock))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(buttonStone), has(buttonStone))
+                .unlockedBy(getHasName(redstone), has(redstone))
+                .unlockedBy(getHasName(noteBlock), has(noteBlock))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LAPTOP_CLOSED_PORTABLE_LAPTOP_STAND)
@@ -459,8 +460,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("2")
                 .define('1', laptop)
                 .define('2', portableLaptopStand)
-                .unlockedBy("has_laptop", has(laptop))
-                .unlockedBy("has_portable_laptop_stand", has(portableLaptopStand))
+                .unlockedBy(getHasName(laptop), has(laptop))
+                .unlockedBy(getHasName(portableLaptopStand), has(portableLaptopStand))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_FLOOR_LAMP, 2)
@@ -469,8 +470,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .define('1', concreteBlack)
                 .define('2', redstoneLamp)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone_lamp", has(redstoneLamp))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(redstoneLamp), has(redstoneLamp))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_FLOOR_LAMP_RGB_OFF, 2)
@@ -479,8 +480,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("11")
                 .define('1', concreteBlack)
                 .define('2', redstoneLamp)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone_lamp", has(redstoneLamp))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(redstoneLamp), has(redstoneLamp))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.LED_RGB_TRIANGLE_PANEL)
@@ -490,9 +491,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', redstoneLamp)
                 .define('3', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone_lamp", has(redstoneLamp))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(redstoneLamp), has(redstoneLamp))
+                .unlockedBy(getHasName(redstone), has(redstone))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_KEYBOARD_CONTROLLER)
@@ -503,10 +504,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', buttonStone)
                 .define('3', endCrystal)
                 .define('4', concreteWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_stone_button", has(buttonStone))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(buttonStone), has(buttonStone))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX)
@@ -516,9 +517,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', buttonStone)
                 .define('3', endCrystal)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_stone_button", has(buttonStone))
-                .unlockedBy("has_end_crystal", has(endCrystal))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(buttonStone), has(buttonStone))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX_2)
@@ -529,16 +530,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('2', buttonStone)
                 .define('3', endCrystal)
                 .define('4', concreteWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_stone_button", has(buttonStone))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(buttonStone), has(buttonStone))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MIDI_STANDALONE_GROOVEBOX_3)
                 .pattern("11")
                 .define('1', midiGroovebox)
-                .unlockedBy("has_midi_standalone_groovebox", has(midiGroovebox))
+                .unlockedBy(getHasName(midiGroovebox), has(midiGroovebox))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_BATHROOM_MIRROR_SHELF)
@@ -546,8 +547,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .define('1', concreteBlack)
                 .define('2', glassPane)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_glass_pane", has(glassPane))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(glassPane), has(glassPane))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_BATHROOM_SINK_STORAGE)
@@ -556,18 +557,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("222")
                 .define('1', concreteWhite)
                 .define('2', concreteBlack)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_CHAIR, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_CHAIR, 2)
                 .pattern("2  ")
                 .pattern("121")
                 .pattern("1 1")
                 .define('1', concreteBlack)
                 .define('2', woolWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_white_wool", has(woolWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(woolWhite), has(woolWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_CLOCK)
@@ -576,16 +577,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" 1 ")
                 .define('1', concreteBlack)
                 .define('2', clock)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_clock", has(clock))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(clock), has(clock))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MODERN_LIGHT, 4)
                 .pattern("121")
                 .define('1', concreteBlack)
                 .define('2', redstoneLamp)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone_lamp", has(redstoneLamp))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(redstoneLamp), has(redstoneLamp))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MONITOR)
@@ -595,22 +596,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', glassPane)
                 .define('3', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_glass_pane", has(glassPane))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(glassPane), has(glassPane))
+                .unlockedBy(getHasName(redstone), has(redstone))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.MONITOR_SETUP)
                 .pattern("14")
                 .pattern("23")
                 .define('1', monitor)
-                .define('2', keyboard)
-                .define('3', computerMouse)
+                .define('2', blackKeyboard)
+                .define('3', blackComputerMouse)
                 .define('4', carpetBlack)
-                .unlockedBy("has_monitor", has(monitor))
-                .unlockedBy("has_keyboard", has(keyboard))
-                .unlockedBy("has_computer_mouse", has(computerMouse))
-                .unlockedBy("has_black_carpet", has(carpetBlack))
+                .unlockedBy(getHasName(monitor), has(monitor))
+                .unlockedBy(getHasName(blackKeyboard), has(blackKeyboard))
+                .unlockedBy(getHasName(blackComputerMouse), has(blackComputerMouse))
+                .unlockedBy(getHasName(carpetBlack), has(carpetBlack))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PC_TOWER_GLASS)
@@ -618,8 +619,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("21")
                 .define('1', concreteBlack)
                 .define('2', glassPane)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_glass_pane", has(glassPane))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(glassPane), has(glassPane))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PLANT_POT)
@@ -628,9 +629,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', ironIngot)
                 .define('2', flowerPot)
                 .define('3', saplingOak)
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .unlockedBy("has_flower_pot", has(flowerPot))
-                .unlockedBy("has_oak_sapling", has(saplingOak))
+                .unlockedBy(getHasName(ironIngot), has(ironIngot))
+                .unlockedBy(getHasName(flowerPot), has(flowerPot))
+                .unlockedBy(getHasName(saplingOak), has(saplingOak))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PORTABLE_LAPTOP_STAND)
@@ -638,7 +639,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .pattern("1 1")
                 .define('1', ironIngot)
-                .unlockedBy("has_iron_ingot", has(ironIngot))
+                .unlockedBy(getHasName(ironIngot), has(ironIngot))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.PSU)
@@ -647,9 +648,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', endCrystal)
                 .define('3', redstoneComparator)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_redstone_comparator", has(redstoneComparator))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(redstoneComparator), has(redstoneComparator))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.RAM, 2)
@@ -658,17 +659,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', ironIngot)
                 .define('3', redstone)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .unlockedBy("has_redstone", has(redstone))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(ironIngot), has(ironIngot))
+                .unlockedBy(getHasName(redstone), has(redstone))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.SHOWER)
                 .pattern("21")
                 .define('1', dyeBlack)
                 .define('2', ironIngot)
-                .unlockedBy("has_black_dye", has(dyeBlack))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
+                .unlockedBy(getHasName(dyeBlack), has(dyeBlack))
+                .unlockedBy(getHasName(ironIngot), has(ironIngot))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.SOCKET, 4)
@@ -677,15 +678,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("1")
                 .define('1', concreteWhite)
                 .define('2', redstone)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_redstone", has(redstone))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.SOFA, 2)
-                .pattern("111")
-                .pattern("111")
-                .define('1', woolWhite)
-                .unlockedBy("has_white_wool", has(woolWhite))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
+                .unlockedBy(getHasName(redstone), has(redstone))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.STUDIO_LIGHT, 2)
@@ -694,8 +688,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("1 1")
                 .define('1', concreteBlack)
                 .define('2', redstoneLamp)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_redstone_lamp", has(redstoneLamp))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(redstoneLamp), has(redstoneLamp))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.TOILET)
@@ -703,7 +697,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .pattern("11 ")
                 .define('1', concreteWhite)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.TV)
@@ -712,19 +706,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteBlack)
                 .define('2', endCrystal)
                 .define('3', dyeWhite)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_end_crystal", has(endCrystal))
-                .unlockedBy("has_white_dye", has(dyeWhite))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
+                .unlockedBy(getHasName(dyeWhite), has(dyeWhite))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.VERTICAL_BLINDS)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_VERTICAL_BLINDS)
                 .pattern("111")
                 .pattern("222")
                 .pattern("222")
-                .define('1', concreteWhite)
+                .define('1', whiteSquareStick)
                 .define('2', bannerWhite)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_white_banner", has(bannerWhite))
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(bannerWhite), has(bannerWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WASHING_MACHINE_AI)
@@ -734,46 +728,91 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', concreteGray)
                 .define('2', redstone)
                 .define('3', endCrystal)
-                .unlockedBy("has_gray_concrete", has(concreteGray))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_end_crystal", has(endCrystal))
+                .unlockedBy(getHasName(concreteGray), has(concreteGray))
+                .unlockedBy(getHasName(redstone), has(redstone))
+                .unlockedBy(getHasName(endCrystal), has(endCrystal))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_3_DRAWER_DRESSER, 2)
-                .pattern("121")
-                .pattern("121")
-                .pattern("121")
-                .define('1', concreteWhite)
-                .define('2', chest)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_chest", has(chest))
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_3_DRAWER_DRESSER)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', whiteCompartmentStorageCabinet)
+                .define('2', whiteDrawerSingle)
+                .unlockedBy(getHasName(whiteCompartmentStorageCabinet), has(whiteCompartmentStorageCabinet))
+                .unlockedBy(getHasName(whiteDrawerSingle), has(whiteDrawerSingle))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_CHAIR, 4)
-                .pattern("2  ")
-                .pattern("122")
-                .pattern("1 1")
-                .define('1', concreteWhite)
-                .define('2', woolWhite)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_white_wool", has(woolWhite))
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_CEILING_FAN_BLACK)
+                .pattern(" 1 ")
+                .pattern("121")
+                .define('1', whiteSquareStick)
+                .define('2', whiteShortSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(whiteShortSquareStick), has(whiteShortSquareStick))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_COFFEE_TABLE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_CEILING_FAN_WHITE)
+                .pattern(" 3 ")
+                .pattern("121")
+                .define('1', whiteSquareStick)
+                .define('2', blackShortSquareStick)
+                .define('3', blackSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_CHAIR)
+                .pattern("1  ")
                 .pattern("111")
                 .pattern("1 1")
-                .define('1', concreteWhite)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .define('1', whiteSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_DESK, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_COFFEE_TABLE)
+                .pattern("22")
+                .pattern("11")
+                .define('1', whiteShortSquareStick)
+                .define('2', whitePanel)
+                .unlockedBy(getHasName(whiteShortSquareStick), has(whiteShortSquareStick))
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(whitePanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WHITE_COMPARTMENT_STORAGE_CABINET)
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_DESK)
+                .pattern("22")
+                .pattern("33")
+                .pattern("11")
+                .define('1', whiteSquareStick)
+                .define('2', whitePanel)
+                .define('3', whiteDrawerSingle)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
+                .unlockedBy(getHasName(whiteDrawerSingle), has(whiteDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_DESK_COLUMN)
+                .pattern(" 12")
+                .pattern(" 1 ")
+                .pattern("111")
+                .define('1', whiteSquareStick)
+                .define('2', redstone)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(redstone), has(redstone))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_DRAWER_SINGLE, 3)
                 .pattern("121")
-                .pattern("1 1")
-                .pattern("1 1")
                 .define('1', concreteWhite)
                 .define('2', chest)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_chest", has(chest))
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
+                .unlockedBy(getHasName(chest), has(chest))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_GAMING_CHAIR)
@@ -783,305 +822,493 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('1', woolWhite)
                 .define('2', woolBlack)
                 .define('3', concreteBlack)
-                .unlockedBy("has_white_wool", has(woolWhite))
-                .unlockedBy("has_black_wool", has(woolBlack))
-                .unlockedBy("has_black_concrete", has(concreteBlack))
+                .unlockedBy(getHasName(woolWhite), has(woolWhite))
+                .unlockedBy(getHasName(woolBlack), has(woolBlack))
+                .unlockedBy(getHasName(concreteBlack), has(concreteBlack))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WHITE_PANEL)
+                .pattern("11")
+                .pattern("11")
+                .define('1', whiteSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WHITE_SHORT_SQUARE_STICK, 2)
+                .pattern("1")
+                .define('1', whiteSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_SOFA, 2)
+                .pattern("111")
+                .pattern("111")
+                .define('1', woolWhite)
+                .unlockedBy(getHasName(woolWhite), has(woolWhite))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WHITE_SQUARE_STICK, 6)
+                .pattern("1")
+                .pattern("1")
+                .pattern("1")
+                .define('1', concreteWhite)
+                .unlockedBy(getHasName(concreteWhite), has(concreteWhite))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_STANDING_DESK)
-                .pattern("222")
-                .pattern("334")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', concreteWhite)
-                .define('3', redstone)
-                .define('4', lever)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
+                .pattern("111")
+                .pattern("232")
+                .define('1', whitePanel)
+                .define('2', blackDeskColumn)
+                .define('3', blackSquareStick)
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
+                .unlockedBy(getHasName(blackDeskColumn), has(blackDeskColumn))
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_STANDING_DESK_B)
-                .pattern("222")
-                .pattern("334")
-                .pattern("2 2")
-                .define('2', concreteWhite)
-                .define('3', redstone)
-                .define('4', lever)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
+                .pattern("111")
+                .pattern("232")
+                .define('1', whitePanel)
+                .define('2', whiteDeskColumn)
+                .define('3', whiteSquareStick)
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
+                .unlockedBy(getHasName(whiteDeskColumn), has(whiteDeskColumn))
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TABLE, 2)
-                .pattern("111")
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TABLE)
+                .pattern("222")
                 .pattern("1 1")
-                .pattern("1 1")
-                .define('1', concreteWhite)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .define('1', whiteSquareStick)
+                .define('2', whitePanel)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WHITE_TV_STAND)
-                .pattern("111")
-                .pattern("212")
-                .define('1', concreteWhite)
-                .define('2', chest)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_3_DRAWER_DRESSER, 2)
-                .pattern("121")
-                .pattern("121")
-                .pattern("121")
-                .define('1', planksBirch)
-                .define('2', chest)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_CHAIR, 4)
-                .pattern("2  ")
-                .pattern("122")
-                .pattern("1 1")
-                .define('1', planksBirch)
-                .define('2', woolWhite)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_COFFEE_TABLE, 2)
+                .pattern(" 11")
                 .pattern("111")
                 .pattern("1 1")
-                .define('1', planksBirch)
-                .unlockedBy("has_birch_planks", has(planksBirch))
+                .define('1', whitePanel)
+                .unlockedBy(getHasName(whitePanel), has(whitePanel))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_DESK, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_3_DRAWER_DRESSER)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', woodLightCompartmentStorageCabinet)
+                .define('2', woodLightDrawerSingle)
+                .unlockedBy(getHasName(woodLightCompartmentStorageCabinet), has(woodLightCompartmentStorageCabinet))
+                .unlockedBy(getHasName(woodLightDrawerSingle), has(woodLightDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_CEILING_FAN_BLACK)
+                .pattern(" 1 ")
+                .pattern("323")
+                .define('1', blackSquareStick)
+                .define('2', blackShortSquareStick)
+                .define('3', woodLightSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_CEILING_FAN_WHITE)
+                .pattern(" 1 ")
+                .pattern("323")
+                .define('1', whiteSquareStick)
+                .define('2', whiteShortSquareStick)
+                .define('3', woodLightSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(whiteShortSquareStick), has(whiteShortSquareStick))
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_CHAIR)
+                .pattern("1  ")
+                .pattern("111")
+                .pattern("1 1")
+                .define('1', woodLightSquareStick)
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_COFFEE_TABLE)
+                .pattern("22")
+                .pattern("11")
+                .define('1', woodLightShortSquareStick)
+                .define('2', woodLightPanel)
+                .unlockedBy(getHasName(woodLightShortSquareStick), has(woodLightShortSquareStick))
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_COMPARTMENT_STORAGE_CABINET)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_DRAWER_SINGLE, 3)
                 .pattern("121")
-                .pattern("1 1")
-                .pattern("1 1")
                 .define('1', planksBirch)
                 .define('2', chest)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_chest", has(chest))
+                .unlockedBy(getHasName(planksBirch), has(planksBirch))
+                .unlockedBy(getHasName(chest), has(chest))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TABLE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_DESK)
+                .pattern("22")
+                .pattern("33")
+                .pattern("11")
+                .define('1', woodLightSquareStick)
+                .define('2', woodLightPanel)
+                .define('3', woodLightDrawerSingle)
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .unlockedBy(getHasName(woodLightDrawerSingle), has(woodLightDrawerSingle))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_2)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_2_EXTRA)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_B)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_B_2)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_B_WITH_SINK)
+                .pattern("2")
+                .pattern("1")
+                .define('1', woodLightKitchenCabinetBottomB)
+                .define('2', bucket)
+                .unlockedBy(getHasName(woodLightKitchenCabinetBottomB), has(woodLightKitchenCabinetBottomB))
+                .unlockedBy(getHasName(bucket), has(bucket))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_WITH_SINK)
+                .pattern("2")
+                .pattern("1")
+                .define('1', woodLightKitchenCabinetBottom)
+                .define('2', bucket)
+                .unlockedBy(getHasName(woodLightKitchenCabinetBottom), has(woodLightKitchenCabinetBottom))
+                .unlockedBy(getHasName(bucket), has(bucket))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_TOP)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_TOP_B)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_COMPARTMENT_STORAGE_CABINET)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodLightPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_COMPARTMENT_STORAGE_CABINET_B)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_DRAWERS)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', woodLightKitchenCompartmentStorageCabinet)
+                .define('2', woodLightDrawerSingle)
+                .unlockedBy(getHasName(woodLightKitchenCompartmentStorageCabinet), has(woodLightKitchenCompartmentStorageCabinet))
+                .unlockedBy(getHasName(woodLightDrawerSingle), has(woodLightDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_KITCHEN_DRAWERS_B)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', woodLightKitchenCompartmentStorageCabinetB)
+                .define('2', woodLightDrawerSingle)
+                .unlockedBy(getHasName(woodLightKitchenCompartmentStorageCabinetB), has(woodLightKitchenCompartmentStorageCabinetB))
+                .unlockedBy(getHasName(woodLightDrawerSingle), has(woodLightDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WOOD_LIGHT_PANEL)
+                .pattern("11")
+                .pattern("11")
+                .define('1', woodLightSquareStick)
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WOOD_LIGHT_SHORT_SQUARE_STICK, 2)
+                .pattern("1")
+                .define('1', woodLightSquareStick)
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WOOD_LIGHT_SQUARE_STICK, 6)
+                .pattern("1")
+                .pattern("1")
+                .pattern("1")
+                .define('1', planksBirch)
+                .unlockedBy(getHasName(planksBirch), has(planksBirch))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_STANDING_DESK)
+                .pattern("111")
+                .pattern("232")
+                .define('1', woodLightPanel)
+                .define('2', blackDeskColumn)
+                .define('3', blackSquareStick)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .unlockedBy(getHasName(blackDeskColumn), has(blackDeskColumn))
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_STANDING_DESK_B)
+                .pattern("111")
+                .pattern("232")
+                .define('1', woodLightPanel)
+                .define('2', whiteDeskColumn)
+                .define('3', whiteSquareStick)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
+                .unlockedBy(getHasName(whiteDeskColumn), has(whiteDeskColumn))
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TABLE)
                 .pattern("222")
                 .pattern("1 1")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', planksBirch)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_birch_planks", has(planksBirch))
+                .define('1', woodLightSquareStick)
+                .define('2', woodLightPanel)
+                .unlockedBy(getHasName(woodLightSquareStick), has(woodLightSquareStick))
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TV_STAND, 2)
-                .pattern("211")
-                .pattern("1 1")
-                .define('1', planksBirch)
-                .define('2', concreteWhite)
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_3_DRAWER_DRESSER, 2)
-                .pattern("121")
-                .pattern("121")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_CHAIR, 4)
-                .pattern("2  ")
-                .pattern("122")
-                .pattern("1 1")
-                .define('1', planksJungle)
-                .define('2', woolWhite)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_white_wool", has(woolWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_COFFEE_TABLE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_LIGHT_TV_STAND)
+                .pattern(" 11")
                 .pattern("111")
                 .pattern("1 1")
-                .define('1', planksJungle)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
+                .define('1', woodLightPanel)
+                .unlockedBy(getHasName(woodLightPanel), has(woodLightPanel))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_DESK, 2)
-                .pattern("121")
-                .pattern("1 1")
-                .pattern("1 1")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_3_DRAWER_DRESSER)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', woodMediumCompartmentStorageCabinet)
+                .define('2', woodMediumDrawerSingle)
+                .unlockedBy(getHasName(woodMediumCompartmentStorageCabinet), has(woodMediumCompartmentStorageCabinet))
+                .unlockedBy(getHasName(woodMediumDrawerSingle), has(woodMediumDrawerSingle))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM, 2)
-                .pattern("333")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', slabJungle)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_jungle_slab", has(slabJungle))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2, 2)
-                .pattern("131")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', ironIngot)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA, 2)
-                .pattern("111")
-                .pattern("131")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', ironIngot)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B, 2)
-                .pattern("333")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', concreteWhite)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2, 2)
-                .pattern("111")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK, 2)
-                .pattern("343")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', concreteWhite)
-                .define('4', bucket)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK, 2)
-                .pattern("343")
-                .pattern("111")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', slabJungle)
-                .define('4', bucket)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_jungle_slab", has(slabJungle))
-                .unlockedBy("has_bucket", has(bucket))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP, 2)
-                .pattern("11")
-                .pattern("23")
-                .pattern("11")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', ironIngot)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_iron_ingot", has(ironIngot))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B, 2)
-                .pattern("11")
-                .pattern("21")
-                .pattern("11")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_CEILING_FAN_BLACK)
+                .pattern(" 1 ")
                 .pattern("323")
-                .pattern("121")
-                .pattern("121")
-                .define('1', planksJungle)
-                .define('2', chest)
-                .define('3', slabJungle)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_jungle_slab", has(slabJungle))
+                .define('1', blackSquareStick)
+                .define('2', blackShortSquareStick)
+                .define('3', woodMediumSquareStick)
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
+                .unlockedBy(getHasName(blackShortSquareStick), has(blackShortSquareStick))
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_CEILING_FAN_WHITE)
+                .pattern(" 1 ")
                 .pattern("323")
-                .pattern("121")
+                .define('1', whiteSquareStick)
+                .define('2', whiteShortSquareStick)
+                .define('3', woodMediumSquareStick)
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
+                .unlockedBy(getHasName(whiteShortSquareStick), has(whiteShortSquareStick))
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_CHAIR)
+                .pattern("1  ")
+                .pattern("111")
+                .pattern("1 1")
+                .define('1', woodMediumSquareStick)
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_COFFEE_TABLE)
+                .pattern("22")
+                .pattern("11")
+                .define('1', woodMediumShortSquareStick)
+                .define('2', woodMediumPanel)
+                .unlockedBy(getHasName(woodMediumShortSquareStick), has(woodMediumShortSquareStick))
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_COMPARTMENT_STORAGE_CABINET)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_DESK)
+                .pattern("22")
+                .pattern("33")
+                .pattern("11")
+                .define('1', woodMediumSquareStick)
+                .define('2', woodMediumPanel)
+                .define('3', woodMediumDrawerSingle)
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .unlockedBy(getHasName(woodMediumDrawerSingle), has(woodMediumDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_DRAWER_SINGLE, 3)
                 .pattern("121")
                 .define('1', planksJungle)
                 .define('2', chest)
-                .define('3', concreteWhite)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_chest", has(chest))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
+                .unlockedBy(getHasName(planksJungle), has(planksJungle))
+                .unlockedBy(getHasName(chest), has(chest))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_2_EXTRA)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_2)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_B_WITH_SINK)
+                .pattern("2")
+                .pattern("1")
+                .define('1', woodMediumKitchenCabinetBottomB)
+                .define('2', bucket)
+                .unlockedBy(getHasName(woodMediumKitchenCabinetBottomB), has(woodMediumKitchenCabinetBottomB))
+                .unlockedBy(getHasName(bucket), has(bucket))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_BOTTOM_WITH_SINK)
+                .pattern("2")
+                .pattern("1")
+                .define('1', woodMediumKitchenCabinetBottom)
+                .define('2', bucket)
+                .unlockedBy(getHasName(woodMediumKitchenCabinetBottom), has(woodMediumKitchenCabinetBottom))
+                .unlockedBy(getHasName(bucket), has(bucket))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_COMPARTMENT_STORAGE_CABINET)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(woodMediumPanel),
+                        RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_COMPARTMENT_STORAGE_CABINET_B)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', woodMediumKitchenCompartmentStorageCabinet)
+                .define('2', woodMediumDrawerSingle)
+                .unlockedBy(getHasName(woodMediumKitchenCompartmentStorageCabinet), has(woodMediumKitchenCompartmentStorageCabinet))
+                .unlockedBy(getHasName(woodMediumDrawerSingle), has(woodMediumDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B)
+                .pattern(" 2")
+                .pattern("12")
+                .pattern(" 2")
+                .define('1', woodMediumKitchenCompartmentStorageCabinetB)
+                .define('2', woodMediumDrawerSingle)
+                .unlockedBy(getHasName(woodMediumKitchenCompartmentStorageCabinetB), has(woodMediumKitchenCompartmentStorageCabinetB))
+                .unlockedBy(getHasName(woodMediumDrawerSingle), has(woodMediumDrawerSingle))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WOOD_MEDIUM_PANEL)
+                .pattern("11")
+                .pattern("11")
+                .define('1', woodMediumSquareStick)
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WOOD_MEDIUM_SHORT_SQUARE_STICK, 2)
+                .pattern("1")
+                .define('1', woodMediumSquareStick)
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.WOOD_MEDIUM_SQUARE_STICK, 6)
+                .pattern("1")
+                .pattern("1")
+                .pattern("1")
+                .define('1', planksJungle)
+                .unlockedBy(getHasName(planksJungle), has(planksJungle))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STANDING_DESK)
-                .pattern("222")
-                .pattern("334")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', planksJungle)
-                .define('3', redstone)
-                .define('4', lever)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
+                .pattern("111")
+                .pattern("232")
+                .define('1', woodMediumPanel)
+                .define('2', blackDeskColumn)
+                .define('3', blackSquareStick)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .unlockedBy(getHasName(blackDeskColumn), has(blackDeskColumn))
+                .unlockedBy(getHasName(blackSquareStick), has(blackSquareStick))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STANDING_DESK_B)
-                .pattern("222")
-                .pattern("334")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', planksJungle)
-                .define('3', redstone)
-                .define('4', lever)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
+                .pattern("111")
+                .pattern("232")
+                .define('1', woodMediumPanel)
+                .define('2', whiteDeskColumn)
+                .define('3', whiteSquareStick)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
+                .unlockedBy(getHasName(whiteDeskColumn), has(whiteDeskColumn))
+                .unlockedBy(getHasName(whiteSquareStick), has(whiteSquareStick))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_STRIPED_WALL, 4)
@@ -1089,54 +1316,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .pattern("111")
                 .define('1', planksJungle)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
+                .unlockedBy(getHasName(planksJungle), has(planksJungle))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TABLE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TABLE)
                 .pattern("222")
                 .pattern("1 1")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', planksJungle)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_jungle_planks", has(planksJungle))
+                .define('1', woodMediumSquareStick)
+                .define('2', woodMediumPanel)
+                .unlockedBy(getHasName(woodMediumSquareStick), has(woodMediumSquareStick))
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TV_STAND, 2)
-                .pattern("211")
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_MEDIUM_TV_STAND)
+                .pattern(" 11")
+                .pattern("111")
                 .pattern("1 1")
-                .define('1', planksJungle)
-                .define('2', concreteWhite)
-                .unlockedBy("has_jungle_planks", has(planksJungle))
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STANDING_DESK)
-                .pattern("222")
-                .pattern("334")
-                .pattern("1 1")
-                .define('1', concreteBlack)
-                .define('2', planksBirch)
-                .define('3', redstone)
-                .define('4', lever)
-                .unlockedBy("has_black_concrete", has(concreteBlack))
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
-                .save(recipeOutput);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STANDING_DESK_B)
-                .pattern("222")
-                .pattern("334")
-                .pattern("1 1")
-                .define('1', concreteWhite)
-                .define('2', planksBirch)
-                .define('3', redstone)
-                .define('4', lever)
-                .unlockedBy("has_white_concrete", has(concreteWhite))
-                .unlockedBy("has_birch_planks", has(planksBirch))
-                .unlockedBy("has_redstone", has(redstone))
-                .unlockedBy("has_lever", has(lever))
+                .define('1', woodMediumPanel)
+                .unlockedBy(getHasName(woodMediumPanel), has(woodMediumPanel))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.WOOD_STRIPED_WALL, 4)
@@ -1144,7 +1341,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("111")
                 .pattern("111")
                 .define('1', planksBirch)
-                .unlockedBy("has_birch_planks", has(planksBirch))
+                .unlockedBy(getHasName(planksBirch), has(planksBirch))
                 .save(recipeOutput);
     }
 }

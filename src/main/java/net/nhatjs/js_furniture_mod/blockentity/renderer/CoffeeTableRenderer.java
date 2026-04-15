@@ -12,8 +12,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.nhatjs.js_furniture_mod.block.CoffeeTableBlock;
-import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.blockentity.client.CoffeeTableBlockEntity;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
+import net.nhatjs.js_furniture_mod.blockentity.CoffeeTableBlockEntity;
 
 import java.util.HashMap;
 import java.util.Map;

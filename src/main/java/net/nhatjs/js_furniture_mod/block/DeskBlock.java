@@ -1,94 +1,48 @@
 package net.nhatjs.js_furniture_mod.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
 
-public class DeskBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class DeskBlock extends FurnitureHorizontalBlock {
     public DeskBlock(Properties settings) {
         super(settings);
     }
 
-    private static final VoxelShape NORTH = Shapes.or(
-            Block.box(-8, 12.925, 0, 24, 16, 16),
-            Block.box(23, 0, 0, 24, 12.925, 1),
-            Block.box(23, 0, 15, 24, 12.925, 16),
-            Block.box(-8, 0, 0, -7, 12.925, 1),
-            Block.box(-8, 0, 15, -7, 12.925, 16),
-            Block.box(23.1, 12.125, 1, 23.9, 12.925, 15),
-            Block.box(-7.9, 12.125, 1, -7.1, 12.925, 15),
-            Block.box(-7.9, 2.2, 1, -7.1, 3, 15),
-            Block.box(23.1, 2.2, 1, 23.9, 3, 15),
-            Block.box(-7, 2.2, 15.1, 23, 3, 15.9),
-            Block.box(-7, 12.125, 15.1, 23, 12.925, 15.9)
+    private static final VoxelShape HORIZONTAL = Shapes.or(
+            box(-8, 0, 0, -6.25, 13, 1.75),
+            box(22.25, 0, 0, 24, 13, 1.75),
+            box(-8, 0, 14.25, -6.25, 13, 16),
+            box(22.25, 0, 14.25, 24, 13, 16),
+            box(-8, 13, 0, 24, 16, 16),
+            box(-7.5, 9, 1.75, -6.75, 10, 14.25),
+            box(22.75, 9, 1.75, 23.5, 10, 14.25)
     );
 
-    private static final VoxelShape SOUTH = Shapes.or(
-            Block.box(-8, 12.925, 0, 24, 16, 16),
-            Block.box(23, 0, 15, 24, 12.925, 16),
-            Block.box(23, 0, 0, 24, 12.925, 1),
-            Block.box(-8, 0, 15, -7, 12.925, 16),
-            Block.box(-8, 0, 0, -7, 12.925, 1),
-            Block.box(23.1, 12.125, 1, 23.9, 12.925, 15),
-            Block.box(-7.9, 12.125, 1, -7.1, 12.925, 15),
-            Block.box(-7.9, 2.2, 1, -7.1, 3, 15),
-            Block.box(23.1, 2.2, 1, 23.9, 3, 15),
-            Block.box(-7, 2.2, 0.1, 23, 3, 0.9),
-            Block.box(-7, 12.125, 0.1, 23, 12.925, 0.9)
-    );
-
-    private static final VoxelShape EAST = Shapes.or(
-            Block.box(-0.025, 12.925, -7.975, 15.975, 16, 24.025),
-            Block.box(14.975, 0, 23.025, 15.975, 12.925, 24.025),
-            Block.box(-0.025, 0, 23.025, 0.975, 12.925, 24.025),
-            Block.box(14.975, 0, -7.975, 15.975, 12.925, -6.975),
-            Block.box(-0.025, 0, -7.975, 0.975, 12.925, -6.975),
-            Block.box(0.975, 12.125, 23.125, 14.975, 12.925, 23.925),
-            Block.box(0.975, 12.125, -7.875, 14.975, 12.925, -7.075),
-            Block.box(0.975, 2.2, -7.875, 14.975, 3, -7.075),
-            Block.box(0.975, 2.2, 23.125, 14.975, 3, 23.925),
-            Block.box(0.075, 2.2, -6.975, 0.875, 3, 23.025),
-            Block.box(0.075, 12.125, -6.975, 0.875, 12.925, 23.025)
-    );
-
-    private static final VoxelShape WEST = Shapes.or(
-            Block.box(0, 12.925, -8, 16, 16, 24),
-            Block.box(0, 0, -8, 1, 12.925, -7),
-            Block.box(15, 0, -8, 16, 12.925, -7),
-            Block.box(0, 0, 23, 1, 12.925, 24),
-            Block.box(15, 0, 23, 16, 12.925, 24),
-            Block.box(1, 12.125, -7.9, 15, 12.925, -7.1),
-            Block.box(1, 12.125, 23.1, 15, 12.925, 23.9),
-            Block.box(1, 2.2, 23.1, 15, 3, 23.9),
-            Block.box(1, 2.2, -7.9, 15, 3, -7.1),
-            Block.box(15.1, 2.2, -7, 15.9, 3, 23),
-            Block.box(15.1, 12.125, -7, 15.9, 12.925, 23)
+    private static final VoxelShape VERTICAL = Shapes.or(
+            box(14.25, 0, -8, 16, 13, -6.25),
+            box(14.25, 0, 22.25, 16, 13, 24),
+            box(0, 0, -8, 1.75, 13, -6.25),
+            box(0, 0, 22.25, 1.75, 13, 24),
+            box(0, 13, -8, 16, 16, 24),
+            box(1.75, 9, -7.5, 14.25, 10, -6.75),
+            box(1.75, 9, 22.75, 14.25, 10, 23.5)
     );
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> NORTH;
-            case SOUTH -> SOUTH;
-            case EAST -> EAST;
-            case WEST -> WEST;
+            default -> Shapes.or(HORIZONTAL, box(-6.25, 3, 14.75, 22.25, 4, 15.5));
+            case SOUTH -> Shapes.or(HORIZONTAL, box(-6.25, 3, 0.5, 22.25, 4, 1.25));
+            case EAST -> Shapes.or(VERTICAL, box(0.5, 3, -6.25, 1.25, 4, 22.25));
+            case WEST -> Shapes.or(VERTICAL, box(14.75, 3, -6.25, 15.5, 4, 22.25));
         };
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override

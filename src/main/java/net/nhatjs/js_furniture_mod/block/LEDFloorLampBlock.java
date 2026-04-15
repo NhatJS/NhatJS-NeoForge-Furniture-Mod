@@ -4,22 +4,24 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
+import net.nhatjs.js_furniture_mod.blockentity.LampBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class LEDFloorLampBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class LEDFloorLampBlock extends FurnitureHorizontalBlock implements EntityBlock {
     public static final BooleanProperty TURN_ON = BooleanProperty.create("turn_on");
 
     public LEDFloorLampBlock(Properties settings) {
@@ -55,15 +57,24 @@ public class LEDFloorLampBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new LampBlockEntity(pos, state);
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide()) {
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!world.isClientSide()) {
             boolean current = state.getValue(TURN_ON);
-            level.setBlock(pos, state.setValue(TURN_ON, !current), 3);
+            world.setBlock(pos, state.setValue(TURN_ON, !current), Block.UPDATE_ALL);
+            BlockEntity entity = world.getBlockEntity(pos);
+            if (!(entity instanceof LampBlockEntity floorLamp)) return InteractionResult.PASS;
+            floorLamp.setPowered(!floorLamp.isPowered());
+            world.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
         }
         return InteractionResult.SUCCESS;
     }

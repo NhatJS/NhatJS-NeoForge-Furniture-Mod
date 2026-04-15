@@ -5,7 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
-import net.nhatjs.js_furniture_mod.block.ModBlocks;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
 
 import java.util.Set;
 
@@ -58,6 +58,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.MODERN_LIGHT.get());
         dropSelf(ModBlocks.LED_FLOOR_LAMP.get());
         dropSelf(ModBlocks.LED_FLOOR_LAMP_RGB_OFF.get());
+        dropSelf(ModBlocks.LED_FLOOR_LAMP_RGB_OFF_2.get());
         dropSelf(ModBlocks.LED_RGB_TRIANGLE_PANEL.get());
         dropSelf(ModBlocks.STUDIO_LIGHT.get());
         dropSelf(ModBlocks.MONITOR_SETUP.get());
@@ -84,18 +85,12 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.PC_TOWER_GLASS.get());
 
-
-        //1.0.2 update
         dropSelf(ModBlocks.CEILING_FAN.get());
         dropSelf(ModBlocks.BLACK_GAMING_CHAIR.get());
         dropSelf(ModBlocks.WHITE_GAMING_CHAIR.get());
-        //end
 
-        //1.0.3 update
         dropSelf(ModBlocks.TOILET.get());
-        //end
 
-        //1.0.4 update
         dropSelf(ModBlocks.CEILING_FAN_B.get());
         dropSelf(ModBlocks.BLACK_SOFA.get());
         dropSelf(ModBlocks.MIDI_KEYBOARD_CONTROLLER.get());
@@ -119,9 +114,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_DRAWERS_B.get());
         dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP.get());
         dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_CABINET_TOP_B.get());
-        //end
 
-        //1.0.5 update
         dropSelf(ModBlocks.COMPUTER_CASE.get());
         dropSelf(ModBlocks.PC_ADDED_1.get());
         dropSelf(ModBlocks.PC_ADDED_2.get());
@@ -134,7 +127,56 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.PC_ADDED_9.get());
         dropSelf(ModBlocks.PC_ADDED_10.get());
         dropSelf(ModBlocks.PC_ADDED_11.get());
-        //end
+
+        dropSelf(ModBlocks.BLACK_CHAIR.get());
+        dropSelf(ModBlocks.BLACK_COFFEE_TABLE.get());
+        dropSelf(ModBlocks.BLACK_3_DRAWER_DRESSER.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_DRAWER_SINGLE.get());
+        dropSelf(ModBlocks.WOOD_MEDIUM_DRAWER_SINGLE.get());
+        dropSelf(ModBlocks.BLACK_DRAWER_SINGLE.get());
+        dropSelf(ModBlocks.WHITE_DRAWER_SINGLE.get());
+        dropSelf(ModBlocks.BLACK_DESK.get());
+        dropSelf(ModBlocks.BLACK_TV_STAND.get());
+        dropSelf(ModBlocks.BLACK_DESK_COLUMN.get());
+        dropSelf(ModBlocks.WHITE_DESK_COLUMN.get());
+        dropSelf(ModBlocks.BLACK_VERTICAL_BLINDS.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_CEILING_FAN_BLACK.get());
+        dropSelf(ModBlocks.WOOD_MEDIUM_CEILING_FAN_BLACK.get());
+        dropSelf(ModBlocks.BLACK_CEILING_FAN_BLACK.get());
+        dropSelf(ModBlocks.WHITE_CEILING_FAN_BLACK.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_CEILING_FAN_WHITE.get());
+        dropSelf(ModBlocks.WOOD_MEDIUM_CEILING_FAN_WHITE.get());
+        dropSelf(ModBlocks.BLACK_CEILING_FAN_WHITE.get());
+        dropSelf(ModBlocks.WHITE_CEILING_FAN_WHITE.get());
+        dropSelf(ModBlocks.WHITE_SOFA.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_COMPARTMENT_STORAGE_CABINET.get());
+        dropSelf(ModBlocks.WOOD_MEDIUM_COMPARTMENT_STORAGE_CABINET.get());
+        dropSelf(ModBlocks.BLACK_COMPARTMENT_STORAGE_CABINET.get());
+        dropSelf(ModBlocks.WHITE_COMPARTMENT_STORAGE_CABINET.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_COMPARTMENT_STORAGE_CABINET.get());
+        dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_COMPARTMENT_STORAGE_CABINET.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_COMPARTMENT_STORAGE_CABINET_B.get());
+        dropSelf(ModBlocks.WOOD_MEDIUM_KITCHEN_COMPARTMENT_STORAGE_CABINET_B.get());
+        dropSelf(ModBlocks.WHITE_VERTICAL_BLINDS.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_3_DRAWER_DRESSER.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_CHAIR.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_COFFEE_TABLE.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_DESK.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_STANDING_DESK.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_STANDING_DESK_B.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_WITH_SINK.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_2.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_2_EXTRA.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_B.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_B_WITH_SINK.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_BOTTOM_B_2.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_DRAWERS.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_DRAWERS_B.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_TOP.get());
+        dropSelf(ModBlocks.WOOD_LIGHT_KITCHEN_CABINET_TOP_B.get());
+        dropSelf(ModBlocks.BLACK_COMPUTER_MOUSE.get());
+        dropSelf(ModBlocks.BLACK_KEYBOARD.get());
     }
 
     @Override

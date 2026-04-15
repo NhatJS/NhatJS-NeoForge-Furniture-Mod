@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,has_item=false": {
+      "model": "js_furniture_mod:block/black_coffee_table",
+      "y": 90
+    },
+    "facing=east,has_item=true": {
+      "model": "js_furniture_mod:block/black_coffee_table",
+      "y": 90
+    },
+    "facing=north,has_item=false": {
+      "model": "js_furniture_mod:block/black_coffee_table"
+    },
+    "facing=north,has_item=true": {
+      "model": "js_furniture_mod:block/black_coffee_table"
+    },
+    "facing=south,has_item=false": {
+      "model": "js_furniture_mod:block/black_coffee_table",
+      "y": 180
+    },
+    "facing=south,has_item=true": {
+      "model": "js_furniture_mod:block/black_coffee_table",
+      "y": 180
+    },
+    "facing=west,has_item=false": {
+      "model": "js_furniture_mod:block/black_coffee_table",
+      "y": 270
+    },
+    "facing=west,has_item=true": {
+      "model": "js_furniture_mod:block/black_coffee_table",
+      "y": 270
+    }
+  }
+}

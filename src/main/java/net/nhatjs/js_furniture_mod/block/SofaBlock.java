@@ -1,7 +1,5 @@
 package net.nhatjs.js_furniture_mod.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -10,7 +8,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -19,46 +16,21 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nhatjs.js_furniture_mod.entity.ModEntities;
-import net.nhatjs.js_furniture_mod.entity.client.SeatBlockEntity;
+import net.nhatjs.js_furniture_mod.block.core.FurnitureHorizontalBlock;
+import net.nhatjs.js_furniture_mod.core.ModEntities;
+import net.nhatjs.js_furniture_mod.entity.SeatBlockEntity;
 
 import java.util.List;
 
-public class SofaBlock extends Block {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class SofaBlock extends FurnitureHorizontalBlock {
     public static final EnumProperty<Part> PART = EnumProperty.create("part", Part.class);
 
-    private static final MapCodec<SofaBlock> CODEC = RecordCodecBuilder.mapCodec(builder -> {
-        return builder.group(DyeColor.CODEC.fieldOf("color").forGetter(block -> {
-            return block.color;
-        }), propertiesCodec()).apply(builder, SofaBlock::new);
-    });
-
-    private final DyeColor color;
-
-    public SofaBlock(DyeColor color, Properties settings)
-    {
-        super(settings);
-        this.color = color;
-        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(PART, Part.SINGLE));
-    }
-
-    public DyeColor getColor()
-    {
-        return this.color;
-    }
-
-    @Override
-    public MapCodec<SofaBlock> codec()
-    {
-        return CODEC;
-    }
+    public SofaBlock(Properties settings) { super(settings); }
 
     public enum Part implements StringRepresentable
     {
@@ -85,13 +57,12 @@ public class SofaBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
         builder.add(FACING, PART);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        Direction facing = ctx.getHorizontalDirection();
+        Direction facing = ctx.getHorizontalDirection().getOpposite();
         BlockState state = this.defaultBlockState().setValue(FACING, facing);
         if(state != null)
         {
@@ -127,8 +98,8 @@ public class SofaBlock extends Block {
                 return Part.CORNER_LEFT;
             }
         }
-        boolean left = this.isConnectable(level, pos, facing, facing.getCounterClockWise());
-        boolean right = this.isConnectable(level, pos, facing, facing.getClockWise());
+        boolean left = this.isConnectable(level, pos, facing, facing.getClockWise());
+        boolean right = this.isConnectable(level, pos, facing, facing.getCounterClockWise());
         if(left && right)
         {
             return Part.MIDDLE;
@@ -157,9 +128,9 @@ public class SofaBlock extends Block {
         if(relativeState.getBlock() instanceof SofaBlock)
         {
             Direction other = relativeState.getValue(FACING);
-            return other == facing || other == offset;
+            return other == facing || other == offset.getOpposite();
         }
-        return relativeState.isFaceSturdy(level, relativePos, offset.getOpposite());
+        return relativeState.isFaceSturdy(level, relativePos, offset);
     }
 
     @Override

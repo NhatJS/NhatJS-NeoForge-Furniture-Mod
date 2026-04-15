@@ -17,8 +17,8 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nhatjs.js_furniture_mod.block.ModBlocks;
-import net.nhatjs.js_furniture_mod.item.ModItems;
+import net.nhatjs.js_furniture_mod.core.ModBlocks;
+import net.nhatjs.js_furniture_mod.core.ModItems;
 
 public class PCAdded11Block extends Block {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;

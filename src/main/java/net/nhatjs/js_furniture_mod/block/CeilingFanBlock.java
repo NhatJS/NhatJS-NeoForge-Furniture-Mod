@@ -1,11 +1,8 @@
 package net.nhatjs.js_furniture_mod.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,43 +17,22 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.nhatjs.js_furniture_mod.blockentity.client.CeilingFanBlockEntity;
+import net.nhatjs.js_furniture_mod.blockentity.CeilingFanBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class CeilingFanBlock extends Block implements EntityBlock {
     public static final BooleanProperty TURN_ON = BooleanProperty.create("turn_on");
 
-    private static final MapCodec<CeilingFanBlock> CODEC = RecordCodecBuilder.mapCodec(builder -> {
-        return builder.group(DyeColor.CODEC.fieldOf("color").forGetter(block -> {
-            return block.color;
-        }), propertiesCodec()).apply(builder, CeilingFanBlock::new);
-    });
-
-    private final DyeColor color;
-
-    public CeilingFanBlock(DyeColor color, Properties settings)
+    public CeilingFanBlock(Properties settings)
     {
         super(settings);
-        this.color = color;
         registerDefaultState(getStateDefinition().any().setValue(TURN_ON, false));
-    }
-
-    public DyeColor getColor()
-    {
-        return this.color;
-    }
-
-
-    @Override
-    public MapCodec<CeilingFanBlock> codec() {
-        return CODEC;
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return Block.box(0, 11, 0, 16, 16, 16);
+        return Block.box(5.15, 7, 5.15, 10.85, 16, 10.85);
     }
-
 
     @Override
     @Nullable
